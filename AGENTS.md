@@ -6,6 +6,11 @@ Do not spawn agents. This build is being implemented sequentially in one convers
 the original A/B directory ownership describes module boundaries, not a requirement to open chats.
 Engine/baselines own simulation and metrics. Intelligence imports the shared scorer.
 Dashboard and experiments call the SDK; never implement alternate metrics or a fake engine.
+The default frontend is now React (frontend/), per the user's explicit amendment.
+web/live.py owns incremental orchestration, reusing the same LinkAdapter, policies,
+contracts, decision validation and compute_metrics; JavaScript only renders engine output.
+Start with ./start-studio.sh. Keep the loopback-only API and distinguish interactive
+growing-cohort metrics from the sealed batch benchmark. Restart Python after source edits.
 Generated large files belong in ignored artifacts/. Keep a compact trusted model in models/.
 Run analytic tests, the causal feature tests and the paired benchmark audit before claiming completion.
 

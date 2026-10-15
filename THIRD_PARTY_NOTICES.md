@@ -7,3 +7,10 @@ SmartRoute adds optional service observation callbacks to Port, without changing
 FIFO, buffer admission, accounting, serialization timeout or downstream handoff.
 Other libraries are installed dependencies, not copied source.
 
+The React frontend uses React/React DOM (MIT), React Flow / @xyflow/react (MIT),
+Lucide React (ISC), and Vite/TypeScript/Vitest as development dependencies. Exact
+versions and package license metadata are retained in frontend/package-lock.json.
+DM Sans and IBM Plex Mono are requested as optional web fonts with system fallbacks;
+their upstream font licenses apply. The ASCII globe is an original SVG implementation
+inspired by the user-supplied DESIGN.md description; no third-party globe asset was copied.
+

@@ -182,7 +182,7 @@ def main():
         f"Benchmark wall time: {manifest['duration_s']:.2f} seconds on {manifest['environment']['platform']} / Python {manifest['environment']['python']}. Timing is observational and hardware-specific.",
         f"Model SHA256: `{model['model_sha256']}`.",
         f"Full manifest SHA256: `{file_hash(root / 'manifest.json')}`.",
-        "Model/scorer/splits were frozen before sealed evaluation. Experiment 1.1 regenerates every affected artifact after the documented decimal-boundary correction; no hyperparameters changed after test inspection.",
+        f"Model/scorer/splits were frozen before sealed evaluation. Experiment {model['experiment_version']} regenerates the source-verified matrix for the React/live API addition. Earlier boundary corrections are documented in DECISIONS.md; no hyperparameters changed after test inspection.",
         "Reactive remains the preselected dashboard default. Five seeds are a small local-study budget; these results do not establish generality, causality outside this simulator, or statistical significance.",
         "Per-flow/workload forecast errors, offered-normalized delivery, null-preserving aggregates, seed deltas, fairness, drop/pending counts and timings are in docs/evidence/. Full packet ledgers remain in artifacts/final-benchmark/runs/.",
         "Reproduce with the README commands. Run failures are retained and block a complete audit; no failed run is filled with zero metrics.",

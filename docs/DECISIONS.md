@@ -32,6 +32,14 @@ timeline, telemetry bounds and stored route decisions) and checks the learned mo
 trained observation interval/horizon before inference. Training and every experiment
 suite were regenerated again with the same frozen configurations and hyperparameters.
 
+Experiment **1.3** adds the user-requested React editor and persistent live sessions.
+The original immutable contract and batch SDK remain unchanged. The model source hash
+now includes the new live/API modules, so training and every benchmark suite were
+regenerated with the original data assignments, model grid and scorer settings. The
+new interactive sessions have explicitly labeled growing-cohort metrics; they are not
+added to the sealed 350-run matrix. The user's React request supersedes the original
+pack's Streamlit frontend choice.
+
 The learned estimator is StandardScaler + Ridge over ten source-rate lags, nine causal
 differences, mean, population std and slope. Rates are expressed in Mbit/s for features.
 Preprocessing fits on train only. Alpha ∈ {0.01, 1, 10} is selected on validation MAE.

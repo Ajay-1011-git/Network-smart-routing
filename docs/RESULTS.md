@@ -1,4 +1,4 @@
-# Measured results — experiment 1.2
+# Measured results — experiment 1.3
 
 The complete sealed matrix passed audit: **350 runs**, 70 workload families, zero failures.
 Seven scenario families × two topologies × five seeds × five policies. Every paired workload shares its packet/event trace hash.
@@ -9,11 +9,11 @@ These are unweighted means of 70 run-level observations per policy, not a pooled
 
 | Policy | Delivery | Cohort goodput (Mbit/s) | Mean latency (ms) | P95 (ms) | Changes/run | Decision time (ms) |
 |---|---:|---:|---:|---:|---:|---:|
-| predictive-learned | 91.38% | 0.766 | 58.14 | 94.98 | 17.73 | 0.1895 |
-| predictive-persistence | 90.14% | 0.753 | 61.79 | 99.48 | 18.10 | 0.0598 |
-| predictive-trend | 92.43% | 0.773 | 58.34 | 97.07 | 17.59 | 0.0822 |
-| reactive | 90.14% | 0.753 | 61.79 | 99.48 | 18.10 | 0.0185 |
-| static | 84.42% | 0.694 | 79.52 | 151.77 | 0.29 | 0.0025 |
+| predictive-learned | 91.38% | 0.766 | 58.14 | 94.98 | 17.73 | 0.2048 |
+| predictive-persistence | 90.14% | 0.753 | 61.79 | 99.48 | 18.10 | 0.0640 |
+| predictive-trend | 92.43% | 0.773 | 58.34 | 97.07 | 17.59 | 0.0883 |
+| reactive | 90.14% | 0.753 | 61.79 | 99.48 | 18.10 | 0.0195 |
+| static | 84.42% | 0.694 | 79.52 | 151.77 | 0.29 | 0.0027 |
 
 ## Scenario-level delivery
 
@@ -87,10 +87,10 @@ The separate 20-run stress suite uses an unseen abrupt-spike amplitude and duty 
 
 ## Reproducibility and limits
 
-Benchmark wall time: 27.43 seconds on macOS-26.6.2-arm64-arm-64bit / Python 3.12.14. Timing is observational and hardware-specific.
+Benchmark wall time: 28.94 seconds on macOS-26.6.2-arm64-arm-64bit / Python 3.12.14. Timing is observational and hardware-specific.
 Model SHA256: `63f1f43ddd8c622059a9d0a9940ffbd1c1eb5cd769e1cabcc7a1bcc883b67dda`.
-Full manifest SHA256: `4a763f8add5e4a41df200c9302e7867364b87a5b5792056d8b2a65e7e371c9db`.
-Model/scorer/splits were frozen before sealed evaluation. Experiment 1.1 regenerates every affected artifact after the documented decimal-boundary correction; no hyperparameters changed after test inspection.
+Full manifest SHA256: `b7614e1296b918007b7ac773b9a5dfcd429eaf84f44701aba136dcd19b9a3fba`.
+Model/scorer/splits were frozen before sealed evaluation. Experiment 1.3 regenerates the source-verified matrix for the React/live API addition. Earlier boundary corrections are documented in DECISIONS.md; no hyperparameters changed after test inspection.
 Reactive remains the preselected dashboard default. Five seeds are a small local-study budget; these results do not establish generality, causality outside this simulator, or statistical significance.
 Per-flow/workload forecast errors, offered-normalized delivery, null-preserving aggregates, seed deltas, fairness, drop/pending counts and timings are in docs/evidence/. Full packet ledgers remain in artifacts/final-benchmark/runs/.
 Reproduce with the README commands. Run failures are retained and block a complete audit; no failed run is filled with zero metrics.

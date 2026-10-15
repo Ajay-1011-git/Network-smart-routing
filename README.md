@@ -1,23 +1,51 @@
 # SmartRoute AI
 
 A local laboratory for reproducible, prediction-assisted network routing. It includes
-a SimPy packet engine, five routing policies, a trained demand forecaster, paired
-experiments and a Streamlit/Plotly dashboard. No account, API key or cloud service is needed.
+a **React network studio**, a SimPy packet engine, routing policies, a trained demand
+forecaster and paired experiments. No account, API key or cloud service is needed.
 
-## Open the dashboard
+## Open the React network studio
 
-The development instance runs at **http://127.0.0.1:8501** while its process is alive.
-To start it again from this folder:
+The studio runs at **http://127.0.0.1:8765** while its process is alive.
+With the Python environment below installed and Node.js 24 available, start it from this folder:
 
 ```sh
-source .venv/bin/activate
-python -m streamlit run src/smartroute/dashboard/app.py --server.address 127.0.0.1
+./start-studio.sh
 ```
 
-Choose a scenario and press **Run simulation**. The replay, forecasts, explanations,
-comparison and export tabs all use real SDK results. Controls do not run an experiment
-until you press Run or Compare. Predictive learned mode uses the included trusted local
-model in `models/selected`; missing/incompatible artifacts produce a visible error.
+The script installs the locked frontend packages on first launch, builds React, then
+serves the app and local live API from one Python process. The main frontend uses
+React, TypeScript, Vite and React Flow. Streamlit is retained only as a legacy report viewer.
+
+Drag devices from the library, connect their ports (or use the cable tool and click two
+devices), then select a wire to set maximum traffic, latency and buffer size. Add a
+traffic flow and press **Start simulation**. Traffic, capacity and link availability
+can change live while queues and in-flight packets remain intact. Reset before editing
+the topology or changing policies. IP labels annotate devices; the simulation uses source routes.
+
+The included demo has a short 1 Mbps path through Core Alpha and a longer 2.5 Mbps
+path through Core Beta. Start at 0.35 Mbps, then press **Stress test** to increase demand
+to 1.8 Mbps. Watch the path change and inspect its reason in the event log. Disable an
+active cable to trigger failover. Packet motion samples real wire-entry events, slowed
+for visibility; the counters include every simulated packet.
+
+Network layout/settings autosave in browser storage. Save/import network JSON for
+portable topologies; export simulation data for packet outcomes and timestamped control edits.
+See [React studio details](docs/REACT_STUDIO.md) for controls, API and live metric semantics.
+
+For frontend development, run the Python service and Vite in separate terminals:
+
+```sh
+.venv/bin/python -m smartroute.web.server --port 8765
+# Second terminal:
+cd frontend
+npm ci
+npm run dev
+```
+
+Vite proxies `/api` to the local Python service. After frontend changes, rebuild and
+reload the browser. After Python changes, restart the service. Live sessions last at
+most five simulated minutes or 200,000 packets; reset to continue.
 
 ## Install from the lock
 
@@ -32,6 +60,10 @@ uv pip install --python .venv/bin/python --no-deps --no-build-isolation -e .
 source .venv/bin/activate
 python -m pytest -q
 python -m ruff check src tests
+cd frontend
+npm ci
+npm test
+npm run build
 ```
 
 The model metadata verifies NumPy, scikit-learn, joblib, SimPy and NetworkX versions,

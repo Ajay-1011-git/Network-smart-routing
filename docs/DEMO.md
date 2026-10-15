@@ -1,28 +1,30 @@
-# Local demonstration
+# Local demonstration — React studio
 
-Start from the README's locked environment. Launch:
+Start from the README's locked Python environment and Node.js 24. Launch:
 
 ```sh
-python -m streamlit run src/smartroute/dashboard/app.py --server.address 127.0.0.1
+./start-studio.sh
 ```
 
-1. Choose diamond / ramp / seed 0 / reactive and press Run simulation.
-   Scrub replay ticks to inspect real resident bytes and service utilization.
-2. Choose predictive-learned and run. In Demand & forecasts, compare the past observed
-   window, next-horizon prediction and offline next-horizon target, all aligned at issuance.
-   The first ten windows show an explicit persistence warm-up reason.
-3. Choose failure and event time 4 seconds. At tick 20, inspect the down link and the
-   forced route explanation. Queued packets may still serialize before an egress drop.
-4. Press Compare all five policies. Packet/event hashes match across the comparison.
-   Inspect delivery and pending alongside latency, including neutral/negative results.
-5. Export result JSON, configuration, summary, telemetry, forecasts and comparison CSVs.
-   Open the result JSON under Open a saved replay to reproduce the stored state.
+1. Open http://127.0.0.1:8765. Choose Adaptive routing demo and Start simulation.
+   At 0.35 Mbps the path runs through Core Alpha's shorter 1 Mbps links.
+2. Press Stress test to raise the same flow to 1.8 Mbps. New packets route through
+   Core Beta's 2.5 Mbps alternative. The event log preserves the initial and new routes.
+3. Select an active cable and edit its maximum traffic. Changes apply at the next
+   control tick. Toggle a cable off to trigger a forced repair, bypassing cooldown.
+4. Pause or Step to inspect a single interval. Inspect Traffic and Packet ledger tabs.
+   Export simulation data to retain the initial network, live edit log and packet outcomes.
+5. Reset or choose Empty workspace. Drag devices from the palette, connect device ports
+   or use the cable tool, configure wire capacities, and add source/destination traffic.
+   Save/import network JSON to preserve the editable topology and device positions.
 
-Changing controls leaves the previous run labeled until Run/Compare is pressed. There
-are no fixture results or fabricated animations. A replay represents simulated events
-and sampled observations, not real packet capture.
+IP labels annotate the source-routed simulation; device icons do not emulate Cisco IOS.
+Packet motion samples real wire-entry events and slows them for visibility. Queues,
+in-flight packets and route versions survive live traffic/capacity/availability changes.
+Reset before editing topology, buffer/delay or policy. Live metrics use the growing
+generation cohort and no final drain; see REACT_STUDIO.md for exact semantics.
 
-Automated Streamlit AppTest exercises a real ramp run, scrubber tick selection, changed
-controls, a real failure run and forecast reasons. Browser review additionally exercises
-learned failure routing, explanations, topology state and a JSON download. Verification
-details and evidence hashes are recorded in docs/evidence/acceptance.json.
+The original Streamlit report viewer remains in src/smartroute/dashboard/ for legacy
+fixed-scenario replay and comparison. The React studio is the default user interface.
+Batch reproducibility commands and all 350 paired test runs remain available in README.
+React checks and browser evidence are recorded in docs/evidence/react-acceptance.json.

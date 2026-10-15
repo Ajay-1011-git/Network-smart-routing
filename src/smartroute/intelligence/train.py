@@ -66,7 +66,7 @@ def main(argv=None):
         "feature_names": FEATURE_NAMES,
         "observation_interval_s": 0.2,
         "horizon_s": 1.0,
-        "experiment_version": "1.2",
+        "experiment_version": "1.3",
     }
     metadata = save_model(estimator, args.output, selected)
     freeze = {
@@ -75,7 +75,7 @@ def main(argv=None):
         "split_hashes": metadata["split_hashes"],
         "scorer": metadata["scorer"],
         "test_manifest": manifests[2],
-        "experiment_version": "1.2",
+        "experiment_version": "1.3",
     }
     atomic_json(freeze, Path(args.output) / "freeze.json")
     grouped = []

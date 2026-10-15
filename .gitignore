@@ -8,4 +8,6 @@ __pycache__/
 artifacts/
 dist/
 build/
+node_modules/
+*.tsbuildinfo
 
