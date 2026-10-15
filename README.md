@@ -13,8 +13,20 @@ With the Python environment below installed and Node.js 24 available, start it f
 ./start-studio.sh
 ```
 
-The script installs the locked frontend packages on first launch, builds React, then
-serves the app and local live API from one Python process. The main frontend uses
+On macOS, you can also double-click **Start SmartRoute.command** in this folder.
+The script checks the trained model, refreshes result graphs using real simulator
+outputs, installs the locked frontend packages on first launch, and builds React.
+It then stops listeners occupying **port 8765** (first gracefully, then forcibly if
+necessary) and serves the app and local live API from one Python process.
+Keep the terminal open; Ctrl+C stops the project. To choose another port:
+
+```sh
+SMARTROUTE_PORT=9000 ./start-studio.sh
+```
+
+Only the selected port is cleared; a process belonging to another user may require
+you to stop it yourself. The Python environment must be installed once as described below.
+The main frontend uses
 React, TypeScript, Vite and React Flow. Streamlit is retained only as a legacy report viewer.
 
 Drag devices from the library, connect their ports (or use the cable tool and click two
@@ -32,6 +44,30 @@ for visibility; the counters include every simulated packet.
 Network layout/settings autosave in browser storage. Save/import network JSON for
 portable topologies; export simulation data for packet outcomes and timestamped control edits.
 See [React studio details](docs/REACT_STUDIO.md) for controls, API and live metric semantics.
+
+## View project results
+
+Choose **Results** in the navigation, or open **http://127.0.0.1:8765/#results**.
+The page contains delivery and latency charts from the audited 350-run benchmark,
+a scenario breakdown, a fresh 24-second traffic-spike/link-failure experiment,
+clickable recorded routes, and an actual studio screenshot. Download individual
+SVG graphs, the screenshot, the run-level CSV, the audit, or all page data.
+
+The live example generates 3,950 packets under each policy: adaptive delivers
+3,605 and static delivers 2,348 at 24 seconds. Pending packets are explicitly
+reported; the live example has no final drain and is separate from the sealed benchmark.
+Opening Results pauses an active studio session while preserving its layout and state.
+
+To regenerate page assets without starting the service:
+
+```sh
+.venv/bin/python scripts/generate-results.py
+cd frontend && npm run build
+```
+
+The generator checks benchmark headlines against all 350 run-level records and
+checks packet conservation in every fresh live step. It does not retrain the model
+or rerun the sealed benchmark. See [results page details](docs/RESULTS_PAGE.md).
 
 For frontend development, run the Python service and Vite in separate terminals:
 

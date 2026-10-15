@@ -1,0 +1,2927 @@
+{
+  "generated_at": "2026-10-15T16:34:50.474265+00:00",
+  "experiment_version": "1.3",
+  "benchmark": {
+    "runs": 350,
+    "families": 70,
+    "scenarios": 7,
+    "topologies": 2,
+    "seeds_per_topology": 5,
+    "policies": 5,
+    "failed": 0,
+    "report": {
+      "predictive-learned": {
+        "decision_runtime_ms": 0.20479506275261797,
+        "delivery_ratio": 0.9137979986807616,
+        "drop_ratio": 0.08620200131923852,
+        "fairness": 0.9133467267995832,
+        "fallback_fraction": 0.002380952380952381,
+        "forced_route_changes": 0.2857142857142857,
+        "mean_latency_s": 0.05813517017522149,
+        "p95_latency_s": 0.09497609334416292,
+        "pending": 0.0,
+        "route_changes": 17.728571428571428,
+        "throughput_bps": 765920.0
+      },
+      "predictive-persistence": {
+        "decision_runtime_ms": 0.06401339817481737,
+        "delivery_ratio": 0.9013877160637619,
+        "drop_ratio": 0.09861228393623828,
+        "fairness": 0.9102828477068959,
+        "fallback_fraction": 0.0,
+        "forced_route_changes": 0.2857142857142857,
+        "mean_latency_s": 0.06179132241231034,
+        "p95_latency_s": 0.09948431920481296,
+        "pending": 0.0,
+        "route_changes": 18.1,
+        "throughput_bps": 753177.1428571428
+      },
+      "predictive-trend": {
+        "decision_runtime_ms": 0.0883033401554539,
+        "delivery_ratio": 0.9242534787720629,
+        "drop_ratio": 0.07574652122793712,
+        "fairness": 0.917166954035151,
+        "fallback_fraction": 0.0,
+        "forced_route_changes": 0.2857142857142857,
+        "mean_latency_s": 0.05834366786344431,
+        "p95_latency_s": 0.09707036250775028,
+        "pending": 0.0,
+        "route_changes": 17.585714285714285,
+        "throughput_bps": 773028.5714285715
+      },
+      "reactive": {
+        "decision_runtime_ms": 0.01954440659444247,
+        "delivery_ratio": 0.9013877160637619,
+        "drop_ratio": 0.09861228393623828,
+        "fairness": 0.9102828477068959,
+        "fallback_fraction": null,
+        "forced_route_changes": 0.2857142857142857,
+        "mean_latency_s": 0.06179132241231034,
+        "p95_latency_s": 0.09948431920481296,
+        "pending": 0.0,
+        "route_changes": 18.1,
+        "throughput_bps": 753177.1428571428
+      },
+      "static": {
+        "decision_runtime_ms": 0.002672400913156924,
+        "delivery_ratio": 0.8441718240807089,
+        "drop_ratio": 0.15582817591929105,
+        "fairness": 0.9028283680527424,
+        "fallback_fraction": null,
+        "forced_route_changes": 0.2857142857142857,
+        "mean_latency_s": 0.07952233431027464,
+        "p95_latency_s": 0.15177451908268286,
+        "pending": 0.0,
+        "route_changes": 0.2857142857142857,
+        "throughput_bps": 694011.4285714285
+      }
+    },
+    "by_scenario": {
+      "capacity": {
+        "static": 0.8525659838318489,
+        "reactive": 0.9903354161136356,
+        "predictive-trend": 0.9903354161136356,
+        "predictive-learned": 0.9903354161136356
+      },
+      "competing": {
+        "static": 0.8153724554266267,
+        "reactive": 0.8748783116525052,
+        "predictive-trend": 0.8748783116525052,
+        "predictive-learned": 0.8748783116525052
+      },
+      "failure": {
+        "static": 0.979155467651504,
+        "reactive": 0.9961107346067709,
+        "predictive-trend": 0.9961107346067709,
+        "predictive-learned": 0.9961107346067709
+      },
+      "periodic": {
+        "static": 0.785545102163827,
+        "reactive": 0.8700271599438648,
+        "predictive-trend": 0.9405620152030894,
+        "predictive-learned": 0.9481415007883213
+      },
+      "ramp": {
+        "static": 0.7480144149301,
+        "reactive": 0.7995105150315347,
+        "predictive-trend": 0.7995105150315347,
+        "predictive-learned": 0.7995105150315347
+      },
+      "spike": {
+        "static": 0.7285493445610562,
+        "reactive": 0.7788518750980208,
+        "predictive-trend": 0.8683773587969043,
+        "predictive-learned": 0.7876095125725626
+      },
+      "steady": {
+        "static": 1.0,
+        "reactive": 1.0,
+        "predictive-trend": 1.0,
+        "predictive-learned": 1.0
+      }
+    },
+    "source_sha256": "29b075b4172473ff31e36171a89328fea93039b0859cc9a5a6d9134b72096d85",
+    "summary_sha256": "482ae3e9fd5ab77308950c4bfbab7229fd587afb688b3fff0ac1ec4e61d8bc48"
+  },
+  "live": {
+    "duration_s": 24,
+    "interval_s": 0.2,
+    "semantics": "Live generation cohort [0,24s); no final drain. Goodput is cumulative.",
+    "controls": [
+      {
+        "time_s": 8,
+        "label": "Traffic rises",
+        "detail": "0.35 \u2192 1.8 Mbps"
+      },
+      {
+        "time_s": 16,
+        "label": "Beta link fails",
+        "detail": "Alternative path unavailable"
+      },
+      {
+        "time_s": 20,
+        "label": "Link restored",
+        "detail": "Beta path available again"
+      }
+    ],
+    "network": {
+      "policy": "reactive",
+      "nodes": [
+        {
+          "id": "Source",
+          "kind": "router",
+          "label": "Source",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "Alpha",
+          "kind": "router",
+          "label": "Alpha",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "Beta",
+          "kind": "router",
+          "label": "Beta",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "Destination",
+          "kind": "router",
+          "label": "Destination",
+          "position": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "connections": [
+        {
+          "id": "sa",
+          "source": "Source",
+          "target": "Alpha",
+          "capacity_mbps": 1,
+          "latency_ms": 2,
+          "buffer_bytes": 64000,
+          "up": true
+        },
+        {
+          "id": "at",
+          "source": "Alpha",
+          "target": "Destination",
+          "capacity_mbps": 1,
+          "latency_ms": 2,
+          "buffer_bytes": 64000,
+          "up": true
+        },
+        {
+          "id": "sb",
+          "source": "Source",
+          "target": "Beta",
+          "capacity_mbps": 2.5,
+          "latency_ms": 12,
+          "buffer_bytes": 64000,
+          "up": true
+        },
+        {
+          "id": "bt",
+          "source": "Beta",
+          "target": "Destination",
+          "capacity_mbps": 2.5,
+          "latency_ms": 12,
+          "buffer_bytes": 64000,
+          "up": true
+        }
+      ],
+      "flows": [
+        {
+          "id": "f",
+          "source": "Source",
+          "target": "Destination",
+          "rate_mbps": 0.35,
+          "packet_bytes": 1000
+        }
+      ]
+    },
+    "runs": {
+      "static": {
+        "samples": [
+          {
+            "time_s": 0.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.32
+          },
+          {
+            "time_s": 0.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 0.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.33333333333333337
+          },
+          {
+            "time_s": 0.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 1.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.344
+          },
+          {
+            "time_s": 1.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 1.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3428571428571429
+          },
+          {
+            "time_s": 1.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.345
+          },
+          {
+            "time_s": 1.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 2.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3454545454545454
+          },
+          {
+            "time_s": 2.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3476923076923077
+          },
+          {
+            "time_s": 2.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 3.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 3.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3475
+          },
+          {
+            "time_s": 3.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34823529411764703
+          },
+          {
+            "time_s": 3.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 3.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34736842105263155
+          },
+          {
+            "time_s": 4.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 4.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 4.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34909090909090906
+          },
+          {
+            "time_s": 4.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3478260869565218
+          },
+          {
+            "time_s": 4.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483333333333334
+          },
+          {
+            "time_s": 5.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3488
+          },
+          {
+            "time_s": 5.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3492307692307692
+          },
+          {
+            "time_s": 5.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34814814814814815
+          },
+          {
+            "time_s": 5.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 5.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3489655172413793
+          },
+          {
+            "time_s": 6.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34933333333333333
+          },
+          {
+            "time_s": 6.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483870967741935
+          },
+          {
+            "time_s": 6.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34875
+          },
+          {
+            "time_s": 6.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3490909090909091
+          },
+          {
+            "time_s": 6.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34941176470588237
+          },
+          {
+            "time_s": 7.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 7.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 7.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3491891891891892
+          },
+          {
+            "time_s": 7.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3494736842105263
+          },
+          {
+            "time_s": 7.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34871794871794876
+          },
+          {
+            "time_s": 8.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.349
+          },
+          {
+            "time_s": 8.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.3639024390243903
+          },
+          {
+            "time_s": 8.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.3790476190476191
+          },
+          {
+            "time_s": 8.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.3934883720930233
+          },
+          {
+            "time_s": 8.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.40727272727272723
+          },
+          {
+            "time_s": 9.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.42044444444444445
+          },
+          {
+            "time_s": 9.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.43304347826086964
+          },
+          {
+            "time_s": 9.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4451063829787234
+          },
+          {
+            "time_s": 9.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.45666666666666667
+          },
+          {
+            "time_s": 9.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4677551020408163
+          },
+          {
+            "time_s": 10.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4784
+          },
+          {
+            "time_s": 10.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4886274509803922
+          },
+          {
+            "time_s": 10.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.49846153846153846
+          },
+          {
+            "time_s": 10.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5079245283018868
+          },
+          {
+            "time_s": 10.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5170370370370371
+          },
+          {
+            "time_s": 11.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5258181818181817
+          },
+          {
+            "time_s": 11.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5342857142857144
+          },
+          {
+            "time_s": 11.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5424561403508772
+          },
+          {
+            "time_s": 11.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.550344827586207
+          },
+          {
+            "time_s": 11.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5579661016949152
+          },
+          {
+            "time_s": 12.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5653333333333334
+          },
+          {
+            "time_s": 12.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5724590163934427
+          },
+          {
+            "time_s": 12.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5793548387096774
+          },
+          {
+            "time_s": 12.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.586031746031746
+          },
+          {
+            "time_s": 12.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5925
+          },
+          {
+            "time_s": 13.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5987692307692307
+          },
+          {
+            "time_s": 13.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6048484848484849
+          },
+          {
+            "time_s": 13.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6107462686567164
+          },
+          {
+            "time_s": 13.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6164705882352941
+          },
+          {
+            "time_s": 13.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6220289855072464
+          },
+          {
+            "time_s": 14.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6274285714285714
+          },
+          {
+            "time_s": 14.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6326760563380281
+          },
+          {
+            "time_s": 14.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6377777777777778
+          },
+          {
+            "time_s": 14.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6427397260273974
+          },
+          {
+            "time_s": 14.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6475675675675676
+          },
+          {
+            "time_s": 15.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6522666666666667
+          },
+          {
+            "time_s": 15.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.656842105263158
+          },
+          {
+            "time_s": 15.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6612987012987013
+          },
+          {
+            "time_s": 15.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6656410256410257
+          },
+          {
+            "time_s": 15.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.669873417721519
+          },
+          {
+            "time_s": 16.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.674
+          },
+          {
+            "time_s": 16.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6780246913580247
+          },
+          {
+            "time_s": 16.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6819512195121952
+          },
+          {
+            "time_s": 16.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6857831325301205
+          },
+          {
+            "time_s": 16.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6895238095238094
+          },
+          {
+            "time_s": 17.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6931764705882353
+          },
+          {
+            "time_s": 17.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6967441860465117
+          },
+          {
+            "time_s": 17.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7002298850574713
+          },
+          {
+            "time_s": 17.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7036363636363635
+          },
+          {
+            "time_s": 17.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7069662921348314
+          },
+          {
+            "time_s": 18.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7102222222222222
+          },
+          {
+            "time_s": 18.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7134065934065934
+          },
+          {
+            "time_s": 18.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7165217391304348
+          },
+          {
+            "time_s": 18.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7195698924731183
+          },
+          {
+            "time_s": 18.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7225531914893617
+          },
+          {
+            "time_s": 19.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7254736842105263
+          },
+          {
+            "time_s": 19.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7283333333333334
+          },
+          {
+            "time_s": 19.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7311340206185568
+          },
+          {
+            "time_s": 19.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7338775510204082
+          },
+          {
+            "time_s": 19.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7365656565656565
+          },
+          {
+            "time_s": 20.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7392
+          },
+          {
+            "time_s": 20.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7417821782178218
+          },
+          {
+            "time_s": 20.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7443137254901961
+          },
+          {
+            "time_s": 20.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7467961165048543
+          },
+          {
+            "time_s": 20.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7492307692307693
+          },
+          {
+            "time_s": 21.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7516190476190475
+          },
+          {
+            "time_s": 21.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7539622641509434
+          },
+          {
+            "time_s": 21.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7562616822429907
+          },
+          {
+            "time_s": 21.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7585185185185184
+          },
+          {
+            "time_s": 21.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7607339449541285
+          },
+          {
+            "time_s": 22.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.762909090909091
+          },
+          {
+            "time_s": 22.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7650450450450451
+          },
+          {
+            "time_s": 22.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7671428571428571
+          },
+          {
+            "time_s": 22.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7692035398230088
+          },
+          {
+            "time_s": 22.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7712280701754385
+          },
+          {
+            "time_s": 23.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7732173913043477
+          },
+          {
+            "time_s": 23.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7751724137931034
+          },
+          {
+            "time_s": 23.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7770940170940172
+          },
+          {
+            "time_s": 23.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7789830508474576
+          },
+          {
+            "time_s": 23.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7808403361344538
+          },
+          {
+            "time_s": 24.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7826666666666666
+          }
+        ],
+        "metrics": {
+          "generated": 3950,
+          "delivered": 2348,
+          "dropped": 1537,
+          "pending": 65,
+          "delivery_ratio": 0.5944303797468354,
+          "drop_ratio": 0.3891139240506329,
+          "throughput_bps": 782666.6666666666,
+          "mean_latency_s": 0.4321453719470086,
+          "p95_latency_s": 0.5239999999993578,
+          "fairness": 1.0,
+          "route_changes": 0,
+          "forced_route_changes": 0
+        },
+        "events": [
+          {
+            "time_s": 0,
+            "flow_id": "f",
+            "old_route": [],
+            "new_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "reason": "initial",
+            "forced": false,
+            "old_cost_s": null,
+            "new_cost_s": null,
+            "projected_peak_load": null
+          }
+        ]
+      },
+      "reactive": {
+        "samples": [
+          {
+            "time_s": 0.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.32
+          },
+          {
+            "time_s": 0.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 0.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.33333333333333337
+          },
+          {
+            "time_s": 0.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 1.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.344
+          },
+          {
+            "time_s": 1.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 1.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3428571428571429
+          },
+          {
+            "time_s": 1.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.345
+          },
+          {
+            "time_s": 1.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 2.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3454545454545454
+          },
+          {
+            "time_s": 2.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3476923076923077
+          },
+          {
+            "time_s": 2.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 3.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 3.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3475
+          },
+          {
+            "time_s": 3.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34823529411764703
+          },
+          {
+            "time_s": 3.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 3.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34736842105263155
+          },
+          {
+            "time_s": 4.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 4.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 4.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34909090909090906
+          },
+          {
+            "time_s": 4.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3478260869565218
+          },
+          {
+            "time_s": 4.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483333333333334
+          },
+          {
+            "time_s": 5.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3488
+          },
+          {
+            "time_s": 5.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3492307692307692
+          },
+          {
+            "time_s": 5.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34814814814814815
+          },
+          {
+            "time_s": 5.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 5.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3489655172413793
+          },
+          {
+            "time_s": 6.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34933333333333333
+          },
+          {
+            "time_s": 6.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483870967741935
+          },
+          {
+            "time_s": 6.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34875
+          },
+          {
+            "time_s": 6.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3490909090909091
+          },
+          {
+            "time_s": 6.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34941176470588237
+          },
+          {
+            "time_s": 7.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 7.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 7.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3491891891891892
+          },
+          {
+            "time_s": 7.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3494736842105263
+          },
+          {
+            "time_s": 7.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34871794871794876
+          },
+          {
+            "time_s": 8.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.349
+          },
+          {
+            "time_s": 8.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.3639024390243903
+          },
+          {
+            "time_s": 8.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.41238095238095235
+          },
+          {
+            "time_s": 8.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4446511627906977
+          },
+          {
+            "time_s": 8.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4754545454545454
+          },
+          {
+            "time_s": 9.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5048888888888888
+          },
+          {
+            "time_s": 9.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5330434782608696
+          },
+          {
+            "time_s": 9.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.56
+          },
+          {
+            "time_s": 9.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5858333333333333
+          },
+          {
+            "time_s": 9.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6106122448979592
+          },
+          {
+            "time_s": 10.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6344
+          },
+          {
+            "time_s": 10.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6572549019607843
+          },
+          {
+            "time_s": 10.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6792307692307692
+          },
+          {
+            "time_s": 10.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.700377358490566
+          },
+          {
+            "time_s": 10.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7207407407407407
+          },
+          {
+            "time_s": 11.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7403636363636363
+          },
+          {
+            "time_s": 11.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7592857142857143
+          },
+          {
+            "time_s": 11.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7775438596491228
+          },
+          {
+            "time_s": 11.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7951724137931034
+          },
+          {
+            "time_s": 11.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8122033898305084
+          },
+          {
+            "time_s": 12.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8286666666666667
+          },
+          {
+            "time_s": 12.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8445901639344263
+          },
+          {
+            "time_s": 12.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.86
+          },
+          {
+            "time_s": 12.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8749206349206349
+          },
+          {
+            "time_s": 12.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.889375
+          },
+          {
+            "time_s": 13.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9033846153846153
+          },
+          {
+            "time_s": 13.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.916969696969697
+          },
+          {
+            "time_s": 13.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9301492537313433
+          },
+          {
+            "time_s": 13.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9429411764705883
+          },
+          {
+            "time_s": 13.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9553623188405798
+          },
+          {
+            "time_s": 14.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9674285714285715
+          },
+          {
+            "time_s": 14.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9791549295774649
+          },
+          {
+            "time_s": 14.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9905555555555555
+          },
+          {
+            "time_s": 14.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0016438356164383
+          },
+          {
+            "time_s": 14.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0124324324324325
+          },
+          {
+            "time_s": 15.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0229333333333335
+          },
+          {
+            "time_s": 15.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.033157894736842
+          },
+          {
+            "time_s": 15.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.043116883116883
+          },
+          {
+            "time_s": 15.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0528205128205128
+          },
+          {
+            "time_s": 15.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0622784810126582
+          },
+          {
+            "time_s": 16.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0715
+          },
+          {
+            "time_s": 16.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0725925925925925
+          },
+          {
+            "time_s": 16.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0717073170731708
+          },
+          {
+            "time_s": 16.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0708433734939757
+          },
+          {
+            "time_s": 16.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.07
+          },
+          {
+            "time_s": 17.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0691764705882352
+          },
+          {
+            "time_s": 17.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0683720930232559
+          },
+          {
+            "time_s": 17.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0675862068965518
+          },
+          {
+            "time_s": 17.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0668181818181817
+          },
+          {
+            "time_s": 17.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0660674157303371
+          },
+          {
+            "time_s": 18.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0653333333333332
+          },
+          {
+            "time_s": 18.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0646153846153847
+          },
+          {
+            "time_s": 18.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0639130434782609
+          },
+          {
+            "time_s": 18.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.063225806451613
+          },
+          {
+            "time_s": 18.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0625531914893618
+          },
+          {
+            "time_s": 19.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0618947368421052
+          },
+          {
+            "time_s": 19.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.06125
+          },
+          {
+            "time_s": 19.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0606185567010311
+          },
+          {
+            "time_s": 19.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.06
+          },
+          {
+            "time_s": 19.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0593939393939396
+          },
+          {
+            "time_s": 20.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0588
+          },
+          {
+            "time_s": 20.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.073267326732673
+          },
+          {
+            "time_s": 20.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0901960784313725
+          },
+          {
+            "time_s": 20.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1029126213592233
+          },
+          {
+            "time_s": 20.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1096153846153844
+          },
+          {
+            "time_s": 21.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1161904761904762
+          },
+          {
+            "time_s": 21.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1226415094339623
+          },
+          {
+            "time_s": 21.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1289719626168224
+          },
+          {
+            "time_s": 21.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.135185185185185
+          },
+          {
+            "time_s": 21.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1412844036697247
+          },
+          {
+            "time_s": 22.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1472727272727272
+          },
+          {
+            "time_s": 22.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1531531531531531
+          },
+          {
+            "time_s": 22.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1589285714285715
+          },
+          {
+            "time_s": 22.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1646017699115043
+          },
+          {
+            "time_s": 22.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1701754385964913
+          },
+          {
+            "time_s": 23.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1756521739130434
+          },
+          {
+            "time_s": 23.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1810344827586208
+          },
+          {
+            "time_s": 23.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1863247863247866
+          },
+          {
+            "time_s": 23.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1915254237288133
+          },
+          {
+            "time_s": 23.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1966386554621848
+          },
+          {
+            "time_s": 24.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.2016666666666667
+          }
+        ],
+        "metrics": {
+          "generated": 3950,
+          "delivered": 3605,
+          "dropped": 338,
+          "pending": 7,
+          "delivery_ratio": 0.9126582278481012,
+          "drop_ratio": 0.08556962025316456,
+          "throughput_bps": 1201666.6666666667,
+          "mean_latency_s": 0.0971365449221367,
+          "p95_latency_s": 0.5222222222220367,
+          "fairness": 1.0,
+          "route_changes": 3,
+          "forced_route_changes": 1
+        },
+        "events": [
+          {
+            "time_s": 20.0,
+            "flow_id": "f",
+            "old_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "new_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "reason": "switch",
+            "forced": false,
+            "old_cost_s": 0.5884,
+            "new_cost_s": 0.030416,
+            "projected_peak_load": 0.72
+          },
+          {
+            "time_s": 16.0,
+            "flow_id": "f",
+            "old_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "new_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "reason": "forced_repair",
+            "forced": true,
+            "old_cost_s": null,
+            "new_cost_s": 0.0684,
+            "projected_peak_load": 1.8
+          },
+          {
+            "time_s": 8.2,
+            "flow_id": "f",
+            "old_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "new_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "reason": "switch",
+            "forced": false,
+            "old_cost_s": 0.2444,
+            "new_cost_s": 0.030416,
+            "projected_peak_load": 0.72
+          },
+          {
+            "time_s": 0,
+            "flow_id": "f",
+            "old_route": [],
+            "new_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "reason": "initial",
+            "forced": false,
+            "old_cost_s": null,
+            "new_cost_s": 0.02,
+            "projected_peak_load": 0.0
+          }
+        ]
+      },
+      "predictive-trend": {
+        "samples": [
+          {
+            "time_s": 0.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.32
+          },
+          {
+            "time_s": 0.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 0.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.33333333333333337
+          },
+          {
+            "time_s": 0.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 1.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.344
+          },
+          {
+            "time_s": 1.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 1.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3428571428571429
+          },
+          {
+            "time_s": 1.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.345
+          },
+          {
+            "time_s": 1.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 2.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3454545454545454
+          },
+          {
+            "time_s": 2.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3476923076923077
+          },
+          {
+            "time_s": 2.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 3.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 3.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3475
+          },
+          {
+            "time_s": 3.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34823529411764703
+          },
+          {
+            "time_s": 3.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 3.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34736842105263155
+          },
+          {
+            "time_s": 4.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 4.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 4.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34909090909090906
+          },
+          {
+            "time_s": 4.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3478260869565218
+          },
+          {
+            "time_s": 4.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483333333333334
+          },
+          {
+            "time_s": 5.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3488
+          },
+          {
+            "time_s": 5.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3492307692307692
+          },
+          {
+            "time_s": 5.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34814814814814815
+          },
+          {
+            "time_s": 5.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 5.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3489655172413793
+          },
+          {
+            "time_s": 6.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34933333333333333
+          },
+          {
+            "time_s": 6.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483870967741935
+          },
+          {
+            "time_s": 6.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34875
+          },
+          {
+            "time_s": 6.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3490909090909091
+          },
+          {
+            "time_s": 6.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34941176470588237
+          },
+          {
+            "time_s": 7.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 7.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 7.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3491891891891892
+          },
+          {
+            "time_s": 7.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3494736842105263
+          },
+          {
+            "time_s": 7.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34871794871794876
+          },
+          {
+            "time_s": 8.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.349
+          },
+          {
+            "time_s": 8.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.3639024390243903
+          },
+          {
+            "time_s": 8.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.41238095238095235
+          },
+          {
+            "time_s": 8.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4446511627906977
+          },
+          {
+            "time_s": 8.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4754545454545454
+          },
+          {
+            "time_s": 9.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5048888888888888
+          },
+          {
+            "time_s": 9.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5330434782608696
+          },
+          {
+            "time_s": 9.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.56
+          },
+          {
+            "time_s": 9.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5858333333333333
+          },
+          {
+            "time_s": 9.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6106122448979592
+          },
+          {
+            "time_s": 10.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6344
+          },
+          {
+            "time_s": 10.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6572549019607843
+          },
+          {
+            "time_s": 10.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6792307692307692
+          },
+          {
+            "time_s": 10.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.700377358490566
+          },
+          {
+            "time_s": 10.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7207407407407407
+          },
+          {
+            "time_s": 11.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7403636363636363
+          },
+          {
+            "time_s": 11.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7592857142857143
+          },
+          {
+            "time_s": 11.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7775438596491228
+          },
+          {
+            "time_s": 11.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7951724137931034
+          },
+          {
+            "time_s": 11.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8122033898305084
+          },
+          {
+            "time_s": 12.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8286666666666667
+          },
+          {
+            "time_s": 12.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8445901639344263
+          },
+          {
+            "time_s": 12.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.86
+          },
+          {
+            "time_s": 12.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8749206349206349
+          },
+          {
+            "time_s": 12.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.889375
+          },
+          {
+            "time_s": 13.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9033846153846153
+          },
+          {
+            "time_s": 13.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.916969696969697
+          },
+          {
+            "time_s": 13.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9301492537313433
+          },
+          {
+            "time_s": 13.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9429411764705883
+          },
+          {
+            "time_s": 13.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9553623188405798
+          },
+          {
+            "time_s": 14.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9674285714285715
+          },
+          {
+            "time_s": 14.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9791549295774649
+          },
+          {
+            "time_s": 14.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9905555555555555
+          },
+          {
+            "time_s": 14.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0016438356164383
+          },
+          {
+            "time_s": 14.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0124324324324325
+          },
+          {
+            "time_s": 15.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0229333333333335
+          },
+          {
+            "time_s": 15.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.033157894736842
+          },
+          {
+            "time_s": 15.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.043116883116883
+          },
+          {
+            "time_s": 15.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0528205128205128
+          },
+          {
+            "time_s": 15.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0622784810126582
+          },
+          {
+            "time_s": 16.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0715
+          },
+          {
+            "time_s": 16.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0725925925925925
+          },
+          {
+            "time_s": 16.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0717073170731708
+          },
+          {
+            "time_s": 16.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0708433734939757
+          },
+          {
+            "time_s": 16.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.07
+          },
+          {
+            "time_s": 17.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0691764705882352
+          },
+          {
+            "time_s": 17.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0683720930232559
+          },
+          {
+            "time_s": 17.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0675862068965518
+          },
+          {
+            "time_s": 17.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0668181818181817
+          },
+          {
+            "time_s": 17.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0660674157303371
+          },
+          {
+            "time_s": 18.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0653333333333332
+          },
+          {
+            "time_s": 18.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0646153846153847
+          },
+          {
+            "time_s": 18.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0639130434782609
+          },
+          {
+            "time_s": 18.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.063225806451613
+          },
+          {
+            "time_s": 18.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0625531914893618
+          },
+          {
+            "time_s": 19.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0618947368421052
+          },
+          {
+            "time_s": 19.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.06125
+          },
+          {
+            "time_s": 19.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0606185567010311
+          },
+          {
+            "time_s": 19.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.06
+          },
+          {
+            "time_s": 19.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0593939393939396
+          },
+          {
+            "time_s": 20.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0588
+          },
+          {
+            "time_s": 20.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.073267326732673
+          },
+          {
+            "time_s": 20.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0901960784313725
+          },
+          {
+            "time_s": 20.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1029126213592233
+          },
+          {
+            "time_s": 20.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1096153846153844
+          },
+          {
+            "time_s": 21.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1161904761904762
+          },
+          {
+            "time_s": 21.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1226415094339623
+          },
+          {
+            "time_s": 21.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1289719626168224
+          },
+          {
+            "time_s": 21.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.135185185185185
+          },
+          {
+            "time_s": 21.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1412844036697247
+          },
+          {
+            "time_s": 22.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1472727272727272
+          },
+          {
+            "time_s": 22.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1531531531531531
+          },
+          {
+            "time_s": 22.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1589285714285715
+          },
+          {
+            "time_s": 22.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1646017699115043
+          },
+          {
+            "time_s": 22.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1701754385964913
+          },
+          {
+            "time_s": 23.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1756521739130434
+          },
+          {
+            "time_s": 23.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1810344827586208
+          },
+          {
+            "time_s": 23.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1863247863247866
+          },
+          {
+            "time_s": 23.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1915254237288133
+          },
+          {
+            "time_s": 23.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1966386554621848
+          },
+          {
+            "time_s": 24.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.2016666666666667
+          }
+        ],
+        "metrics": {
+          "generated": 3950,
+          "delivered": 3605,
+          "dropped": 338,
+          "pending": 7,
+          "delivery_ratio": 0.9126582278481012,
+          "drop_ratio": 0.08556962025316456,
+          "throughput_bps": 1201666.6666666667,
+          "mean_latency_s": 0.0971365449221367,
+          "p95_latency_s": 0.5222222222220367,
+          "fairness": 1.0,
+          "route_changes": 3,
+          "forced_route_changes": 1
+        },
+        "events": [
+          {
+            "time_s": 20.0,
+            "flow_id": "f",
+            "old_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "new_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "reason": "switch",
+            "forced": false,
+            "old_cost_s": 0.5884,
+            "new_cost_s": 0.030416,
+            "projected_peak_load": 0.7199999999999999
+          },
+          {
+            "time_s": 16.0,
+            "flow_id": "f",
+            "old_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "new_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "reason": "forced_repair",
+            "forced": true,
+            "old_cost_s": null,
+            "new_cost_s": 0.06839999999999997,
+            "projected_peak_load": 1.7999999999999996
+          },
+          {
+            "time_s": 8.2,
+            "flow_id": "f",
+            "old_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "new_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "reason": "switch",
+            "forced": false,
+            "old_cost_s": 0.35029184,
+            "new_cost_s": 0.0357465344,
+            "projected_peak_load": 1.0655999999999999
+          },
+          {
+            "time_s": 0,
+            "flow_id": "f",
+            "old_route": [],
+            "new_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "reason": "initial",
+            "forced": false,
+            "old_cost_s": null,
+            "new_cost_s": 0.02,
+            "projected_peak_load": 0.0
+          }
+        ]
+      },
+      "predictive-learned": {
+        "samples": [
+          {
+            "time_s": 0.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.32
+          },
+          {
+            "time_s": 0.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 0.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.33333333333333337
+          },
+          {
+            "time_s": 0.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34
+          },
+          {
+            "time_s": 1.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.344
+          },
+          {
+            "time_s": 1.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 1.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3428571428571429
+          },
+          {
+            "time_s": 1.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.345
+          },
+          {
+            "time_s": 1.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 2.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3454545454545454
+          },
+          {
+            "time_s": 2.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 2.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3476923076923077
+          },
+          {
+            "time_s": 2.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 3.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3466666666666667
+          },
+          {
+            "time_s": 3.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3475
+          },
+          {
+            "time_s": 3.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34823529411764703
+          },
+          {
+            "time_s": 3.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 3.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34736842105263155
+          },
+          {
+            "time_s": 4.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.348
+          },
+          {
+            "time_s": 4.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 4.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34909090909090906
+          },
+          {
+            "time_s": 4.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3478260869565218
+          },
+          {
+            "time_s": 4.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483333333333334
+          },
+          {
+            "time_s": 5.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3488
+          },
+          {
+            "time_s": 5.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3492307692307692
+          },
+          {
+            "time_s": 5.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34814814814814815
+          },
+          {
+            "time_s": 5.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 5.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3489655172413793
+          },
+          {
+            "time_s": 6.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34933333333333333
+          },
+          {
+            "time_s": 6.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3483870967741935
+          },
+          {
+            "time_s": 6.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34875
+          },
+          {
+            "time_s": 6.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3490909090909091
+          },
+          {
+            "time_s": 6.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34941176470588237
+          },
+          {
+            "time_s": 7.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3485714285714286
+          },
+          {
+            "time_s": 7.2,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34888888888888886
+          },
+          {
+            "time_s": 7.4,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3491891891891892
+          },
+          {
+            "time_s": 7.6,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.3494736842105263
+          },
+          {
+            "time_s": 7.8,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.34871794871794876
+          },
+          {
+            "time_s": 8.0,
+            "demand_mbps": 0.35,
+            "goodput_mbps": 0.349
+          },
+          {
+            "time_s": 8.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.3639024390243903
+          },
+          {
+            "time_s": 8.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.41238095238095235
+          },
+          {
+            "time_s": 8.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4446511627906977
+          },
+          {
+            "time_s": 8.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.4754545454545454
+          },
+          {
+            "time_s": 9.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5048888888888888
+          },
+          {
+            "time_s": 9.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5330434782608696
+          },
+          {
+            "time_s": 9.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.56
+          },
+          {
+            "time_s": 9.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.5858333333333333
+          },
+          {
+            "time_s": 9.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6106122448979592
+          },
+          {
+            "time_s": 10.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6344
+          },
+          {
+            "time_s": 10.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6572549019607843
+          },
+          {
+            "time_s": 10.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.6792307692307692
+          },
+          {
+            "time_s": 10.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.700377358490566
+          },
+          {
+            "time_s": 10.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7207407407407407
+          },
+          {
+            "time_s": 11.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7403636363636363
+          },
+          {
+            "time_s": 11.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7592857142857143
+          },
+          {
+            "time_s": 11.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7775438596491228
+          },
+          {
+            "time_s": 11.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.7951724137931034
+          },
+          {
+            "time_s": 11.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8122033898305084
+          },
+          {
+            "time_s": 12.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8286666666666667
+          },
+          {
+            "time_s": 12.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8445901639344263
+          },
+          {
+            "time_s": 12.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.86
+          },
+          {
+            "time_s": 12.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.8749206349206349
+          },
+          {
+            "time_s": 12.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.889375
+          },
+          {
+            "time_s": 13.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9033846153846153
+          },
+          {
+            "time_s": 13.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.916969696969697
+          },
+          {
+            "time_s": 13.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9301492537313433
+          },
+          {
+            "time_s": 13.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9429411764705883
+          },
+          {
+            "time_s": 13.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9553623188405798
+          },
+          {
+            "time_s": 14.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9674285714285715
+          },
+          {
+            "time_s": 14.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9791549295774649
+          },
+          {
+            "time_s": 14.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 0.9905555555555555
+          },
+          {
+            "time_s": 14.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0016438356164383
+          },
+          {
+            "time_s": 14.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0124324324324325
+          },
+          {
+            "time_s": 15.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0229333333333335
+          },
+          {
+            "time_s": 15.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.033157894736842
+          },
+          {
+            "time_s": 15.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.043116883116883
+          },
+          {
+            "time_s": 15.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0528205128205128
+          },
+          {
+            "time_s": 15.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0622784810126582
+          },
+          {
+            "time_s": 16.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0715
+          },
+          {
+            "time_s": 16.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0725925925925925
+          },
+          {
+            "time_s": 16.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0717073170731708
+          },
+          {
+            "time_s": 16.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0708433734939757
+          },
+          {
+            "time_s": 16.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.07
+          },
+          {
+            "time_s": 17.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0691764705882352
+          },
+          {
+            "time_s": 17.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0683720930232559
+          },
+          {
+            "time_s": 17.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0675862068965518
+          },
+          {
+            "time_s": 17.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0668181818181817
+          },
+          {
+            "time_s": 17.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0660674157303371
+          },
+          {
+            "time_s": 18.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0653333333333332
+          },
+          {
+            "time_s": 18.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0646153846153847
+          },
+          {
+            "time_s": 18.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0639130434782609
+          },
+          {
+            "time_s": 18.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.063225806451613
+          },
+          {
+            "time_s": 18.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0625531914893618
+          },
+          {
+            "time_s": 19.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0618947368421052
+          },
+          {
+            "time_s": 19.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.06125
+          },
+          {
+            "time_s": 19.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0606185567010311
+          },
+          {
+            "time_s": 19.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.06
+          },
+          {
+            "time_s": 19.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0593939393939396
+          },
+          {
+            "time_s": 20.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0588
+          },
+          {
+            "time_s": 20.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.073267326732673
+          },
+          {
+            "time_s": 20.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.0901960784313725
+          },
+          {
+            "time_s": 20.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1029126213592233
+          },
+          {
+            "time_s": 20.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1096153846153844
+          },
+          {
+            "time_s": 21.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1161904761904762
+          },
+          {
+            "time_s": 21.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1226415094339623
+          },
+          {
+            "time_s": 21.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1289719626168224
+          },
+          {
+            "time_s": 21.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.135185185185185
+          },
+          {
+            "time_s": 21.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1412844036697247
+          },
+          {
+            "time_s": 22.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1472727272727272
+          },
+          {
+            "time_s": 22.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1531531531531531
+          },
+          {
+            "time_s": 22.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1589285714285715
+          },
+          {
+            "time_s": 22.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1646017699115043
+          },
+          {
+            "time_s": 22.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1701754385964913
+          },
+          {
+            "time_s": 23.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1756521739130434
+          },
+          {
+            "time_s": 23.2,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1810344827586208
+          },
+          {
+            "time_s": 23.4,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1863247863247866
+          },
+          {
+            "time_s": 23.6,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1915254237288133
+          },
+          {
+            "time_s": 23.8,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.1966386554621848
+          },
+          {
+            "time_s": 24.0,
+            "demand_mbps": 1.8,
+            "goodput_mbps": 1.2016666666666667
+          }
+        ],
+        "metrics": {
+          "generated": 3950,
+          "delivered": 3605,
+          "dropped": 338,
+          "pending": 7,
+          "delivery_ratio": 0.9126582278481012,
+          "drop_ratio": 0.08556962025316456,
+          "throughput_bps": 1201666.6666666667,
+          "mean_latency_s": 0.0971365449221367,
+          "p95_latency_s": 0.5222222222220367,
+          "fairness": 1.0,
+          "route_changes": 3,
+          "forced_route_changes": 1
+        },
+        "events": [
+          {
+            "time_s": 20.0,
+            "flow_id": "f",
+            "old_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "new_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "reason": "switch",
+            "forced": false,
+            "old_cost_s": 0.5884,
+            "new_cost_s": 0.030416,
+            "projected_peak_load": 0.72
+          },
+          {
+            "time_s": 16.0,
+            "flow_id": "f",
+            "old_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "new_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "reason": "forced_repair",
+            "forced": true,
+            "old_cost_s": null,
+            "new_cost_s": 0.0684,
+            "projected_peak_load": 1.8
+          },
+          {
+            "time_s": 8.2,
+            "flow_id": "f",
+            "old_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "new_route": [
+              "sb:fwd",
+              "bt:fwd"
+            ],
+            "reason": "switch",
+            "forced": false,
+            "old_cost_s": 0.2444,
+            "new_cost_s": 0.030416,
+            "projected_peak_load": 0.72
+          },
+          {
+            "time_s": 0,
+            "flow_id": "f",
+            "old_route": [],
+            "new_route": [
+              "sa:fwd",
+              "at:fwd"
+            ],
+            "reason": "initial",
+            "forced": false,
+            "old_cost_s": null,
+            "new_cost_s": 0.02,
+            "projected_peak_load": 0.0
+          }
+        ]
+      }
+    }
+  }
+}

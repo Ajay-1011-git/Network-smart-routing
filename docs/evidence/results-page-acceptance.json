@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "experiment_version": "1.3",
+  "python_tests": 67,
+  "frontend_tests": 5,
+  "production_build": "passed",
+  "benchmark_audit_runs": 350,
+  "fresh_live_runs": 4,
+  "fresh_live_duration_s": 24,
+  "fresh_live_generated_per_policy": 3950,
+  "fresh_live_adaptive_delivered": 3605,
+  "fresh_live_static_delivered": 2348,
+  "canonical_simulation_source_unchanged": true,
+  "page_data_sha256": "1e02468561072d85c87a2df01491343a9dc47966f082c58e95ff1783ff788669",
+  "browser": {
+    "chart_metric_switch": true,
+    "scenario_expansion": true,
+    "recorded_failover_replay": true,
+    "studio_session_preserved_across_navigation": true,
+    "mobile_width": 390,
+    "desktop_width": 1440,
+    "page_has_no_horizontal_overflow": true,
+    "temporary_viewport_reset": true,
+    "screenshot": "docs/evidence/results-page.png",
+    "url": "http://127.0.0.1:8765/#results"
+  },
+  "launcher_evidence": "docs/evidence/launcher-check.json"
+}

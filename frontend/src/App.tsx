@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Background, BackgroundVariant, ConnectionMode, Controls, MiniMap, ReactFlow, ReactFlowProvider,
   applyEdgeChanges, applyNodeChanges, useReactFlow } from '@xyflow/react';
 import type { Connection, EdgeChange, NodeChange } from '@xyflow/react';
@@ -10,6 +10,8 @@ import { DeviceIcon } from './Icons';
 import { Globe } from './Globe';
 import { api, blankNetwork, cleanNetwork, demoNetwork, download, parseNetwork, policies, removeDevice, routeNames, toApi } from './model';
 import type { CableEdge, DeviceKind, DeviceNode, Flow, LiveState, Network, Policy, Transmission } from './model';
+
+const Results=lazy(()=>import('./Results').then(module=>({default:module.Results})));
 
 const DEVICE_KINDS: {kind:DeviceKind; label:string; detail:string}[] = [
   {kind:'router',label:'Router',detail:'Route between networks'}, {kind:'switch',label:'Switch',detail:'Connect local devices'},
@@ -27,7 +29,7 @@ function usePersistedNetwork() {
   return [network,setNetwork] as const;
 }
 
-function Studio() {
+function Studio({active}: {active:boolean}) {
   const [network,setNetwork]=usePersistedNetwork();
   const [selection,setSelection]=useState<Selection>({type:'edge',id:'c2'});
   const [mode,setMode]=useState<'select'|'wire'>('select');
@@ -46,6 +48,7 @@ function Studio() {
   const controlsRef=useRef(false), importRef=useRef<HTMLInputElement>(null);
   const flowInstance=useReactFlow<DeviceNode,CableEdge>();
   networkRef.current=network;
+  useEffect(()=>{if(!active)setRunning(false);},[active]);
 
   useEffect(() => {
     let active=true;
@@ -183,7 +186,7 @@ function Studio() {
   return <div className="studio-app">
     <header className="app-header">
       <a className="brand" href="/" aria-label="SmartRoute home"><span className="brand-mark"><Route size={21}/></span>smartroute<span className="brand-dot">®</span></a>
-      <div className="header-separator"/><div className="header-nav"><button className="active"><span className="tiny-square"/>Network studio</button><button onClick={()=>setHelp(true)}>Quick guide <ArrowUpRight size={13}/></button></div>
+      <div className="header-separator"/><div className="header-nav"><a href="#studio" className="active" aria-current="page"><span className="tiny-square"/>Network studio</a><a href="#results">Results <ArrowUpRight size={13}/></a><button onClick={()=>setHelp(true)}>Quick guide <ArrowUpRight size={13}/></button></div>
       <div className="header-right"><span className={`engine-status ${health}`}><span/>{health==='online'?'LOCAL ENGINE ONLINE':health==='offline'?'ENGINE OFFLINE':'CONNECTING TO ENGINE'}</span><button className="icon-button" title="Quick guide" aria-label="Open help" onClick={()=>setHelp(true)}><CircleHelp size={18}/></button><span className="avatar">SR</span></div>
     </header>
 
@@ -283,4 +286,12 @@ function TrafficChart({history}: {history:LiveState['history']}) {
   return <svg className="traffic-chart" viewBox="0 0 700 96" preserveAspectRatio="none" role="img" aria-label="Offered traffic and delivered goodput history"><path d="M0 85H700M0 49H700M0 13H700" stroke="#27272b" strokeWidth="1" strokeDasharray="3 4"/>{history.length>1?<><polyline points={points('offered_mbps')} fill="none" stroke="#8b8bfe" strokeWidth="1.8"/><polyline points={points('goodput_mbps')} fill="none" stroke="#7fd579" strokeWidth="1.5"/></>:<text x="350" y="50" textAnchor="middle" fill="#73737e" fontSize="11">Run the simulation to see traffic history</text>}</svg>;
 }
 
-export default function App(){return <ReactFlowProvider><Studio/></ReactFlowProvider>;}
+export default function App(){
+  const [results,setResults]=useState(window.location.hash==='#results');
+  useEffect(()=>{
+    const handler=()=>{setResults(window.location.hash==='#results');window.scrollTo(0,0);};
+    window.addEventListener('hashchange',handler);return ()=>window.removeEventListener('hashchange',handler);
+  },[]);
+  useEffect(()=>{document.title=results?'Results — SmartRoute':'Network Studio — SmartRoute';},[results]);
+  return <><div hidden={results}><ReactFlowProvider><Studio active={!results}/></ReactFlowProvider></div>{results&&<Suspense fallback={<p role="status" style={{padding:32}}>Loading measured results…</p>}><Results/></Suspense>}</>;
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+<title id="title">Mean packet latency</title><desc id="desc">Mean of 70 paired workload runs per policy.  ms</desc>
+<rect width="100%" height="100%" fill="#161616"/>
+<g font-family="Arial, sans-serif" font-size="14" fill="#b1b1bc">
+<path d="M220.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="220.0" y="318" text-anchor="middle">0 ms</text>
+<path d="M362.5 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="362.5" y="318" text-anchor="middle">25 ms</text>
+<path d="M505.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="505.0" y="318" text-anchor="middle">50 ms</text>
+<path d="M647.5 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="647.5" y="318" text-anchor="middle">75 ms</text>
+<path d="M790.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="790.0" y="318" text-anchor="middle">100 ms</text>
+<text x="197" y="83" text-anchor="end">Static</text>
+<rect x="220" y="63" width="453.27730556856545" height="29" fill="#777786" rx="1"/>
+<text x="685.2773055685655" y="83" fill="#eaeaea">79.52</text>
+<text x="197" y="144" text-anchor="end">Adaptive</text>
+<rect x="220" y="124" width="352.21053775016895" height="29" fill="#8b8bfe" rx="1"/>
+<text x="584.2105377501689" y="144" fill="#eaeaea">61.79</text>
+<text x="197" y="205" text-anchor="end">Predictive · trend</text>
+<rect x="220" y="185" width="332.5589068216326" height="29" fill="#7fd579" rx="1"/>
+<text x="564.5589068216326" y="205" fill="#eaeaea">58.34</text>
+<text x="197" y="266" text-anchor="end">Predictive · learned</text>
+<rect x="220" y="246" width="331.3704699987625" height="29" fill="#d896ff" rx="1"/>
+<text x="563.3704699987625" y="266" fill="#eaeaea">58.14</text>
+</g></svg>

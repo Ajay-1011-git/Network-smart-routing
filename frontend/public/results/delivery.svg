@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+<title id="title">Packet delivery</title><desc id="desc">Mean of 70 paired workload runs per policy. %</desc>
+<rect width="100%" height="100%" fill="#161616"/>
+<g font-family="Arial, sans-serif" font-size="14" fill="#b1b1bc">
+<path d="M220.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="220.0" y="318" text-anchor="middle">0%</text>
+<path d="M362.5 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="362.5" y="318" text-anchor="middle">25%</text>
+<path d="M505.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="505.0" y="318" text-anchor="middle">50%</text>
+<path d="M647.5 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="647.5" y="318" text-anchor="middle">75%</text>
+<path d="M790.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="790.0" y="318" text-anchor="middle">100%</text>
+<text x="197" y="83" text-anchor="end">Static</text>
+<rect x="220" y="63" width="481.17793972600407" height="29" fill="#777786" rx="1"/>
+<text x="713.1779397260041" y="83" fill="#eaeaea">84.42</text>
+<text x="197" y="144" text-anchor="end">Adaptive</text>
+<rect x="220" y="124" width="513.7909981563444" height="29" fill="#8b8bfe" rx="1"/>
+<text x="745.7909981563444" y="144" fill="#eaeaea">90.14</text>
+<text x="197" y="205" text-anchor="end">Predictive · trend</text>
+<rect x="220" y="185" width="526.8244829000759" height="29" fill="#7fd579" rx="1"/>
+<text x="758.8244829000759" y="205" fill="#eaeaea">92.43</text>
+<text x="197" y="266" text-anchor="end">Predictive · learned</text>
+<rect x="220" y="246" width="520.8648592480341" height="29" fill="#d896ff" rx="1"/>
+<text x="752.8648592480341" y="266" fill="#eaeaea">91.38</text>
+</g></svg>

@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "occupied_port_replaced": true,
+  "stubborn_listener_killed": true,
+  "existing_studio_restarted": true,
+  "other_port_untouched": true,
+  "runs_from_other_directory": true,
+  "mac_command_wrapper": true,
+  "invalid_ports_rejected": 4,
+  "test_port": 60966,
+  "other_port": 60967
+}
