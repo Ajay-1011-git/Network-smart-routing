@@ -48,7 +48,8 @@ See [React studio details](docs/REACT_STUDIO.md) for controls, API and live metr
 ## View project results
 
 Choose **Results** in the navigation, or open **http://127.0.0.1:8765/#results**.
-The page contains delivery and latency charts from the audited 350-run benchmark,
+The page contains delivery and latency charts, with 95% confidence intervals, from an
+audited 3,500-run held-out benchmark (50 fresh seeds), the original 350-run sealed test,
 a scenario breakdown, a fresh 24-second traffic-spike/link-failure experiment,
 clickable recorded routes, and an actual studio screenshot. Download individual
 SVG graphs, the screenshot, the run-level CSV, the audit, or all page data.
@@ -65,7 +66,8 @@ To regenerate page assets without starting the service:
 cd frontend && npm run build
 ```
 
-The generator checks benchmark headlines against all 350 run-level records and
+The generator checks benchmark headlines against all 3,500 + 350 run-level records,
+recomputes every interval from the run-level CSV, and
 checks packet conservation in every fresh live step. It does not retrain the model
 or rerun the sealed benchmark. See [results page details](docs/RESULTS_PAGE.md).
 
@@ -132,12 +134,17 @@ python -m smartroute.experiments.run --suite full --model models/selected --outp
 python -m smartroute.experiments.audit --manifest artifacts/final-benchmark/manifest.json
 python -m smartroute.experiments.run --suite stress --output artifacts/stress
 python -m smartroute.experiments.publish_report
+python -m smartroute.experiments.run --suite extended-test --output artifacts/extended-test
+python -m smartroute.experiments.publish_extended
 ```
 
 Training creates 140 train and 42 validation workload families, each under static and
 reactive routing. The sealed test has 70 families: seven scenarios × two topologies ×
 five seeds. Each uses five policies: **350 paired test runs**. Stress and validation-only
-no-hysteresis runs are reported separately. All scorer parameters remain the predeclared
+no-hysteresis runs are reported separately. The **extended held-out test** reruns the
+same matrix on 50 new seeds (300–349): 700 families, **3,500 paired runs**, audited and
+summarised with paired seed-block bootstrap intervals (`smartroute.experiments.statistics`).
+Its seeds are rejected if they overlap any training, validation or test family. All scorer parameters remain the predeclared
 shared defaults; model selection uses validation only. Suite reruns regenerate results
 rather than resuming from unchecked cached files.
 

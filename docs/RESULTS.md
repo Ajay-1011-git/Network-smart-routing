@@ -1,4 +1,34 @@
-# Measured results — experiment 1.3
+# Measured results
+
+## Extended held-out test — 3,500 runs (headline)
+
+Same frozen model, scorer and engine as experiment 1.3, on 50 fresh seeds (300–349) that never
+appeared in training, validation or the original test: 7 scenarios × 2 topologies × 50 seeds ×
+5 policies. Audit passed: 3,500 runs, 700 families, zero failures, identical traces per family,
+zero pending packets. Intervals: paired percentile bootstrap over 50 seed blocks, 20,000 draws.
+
+| Policy | Delivery | 95% CI | Mean latency (ms) | P95 (ms) | Changes/run |
+|---|---:|---:|---:|---:|---:|
+| predictive-trend | 92.48% | 91.19–93.77% | 57.33 | 97.63 | 17.90 |
+| predictive-learned | 91.00% | 89.55–92.48% | 59.43 | 98.46 | 18.36 |
+| reactive | 89.99% | 88.38–91.60% | 61.74 | 98.79 | 18.53 |
+| predictive-persistence | 89.99% | 88.38–91.56% | 61.74 | 98.79 | 18.53 |
+| static | 84.36% | 82.21–86.44% | 78.24 | 151.13 | 0.29 |
+
+| Comparison (delivery) | Mean difference (pp) | 95% CI (pp) | Better / equal / worse runs | Verdict |
+|---|---:|---:|---:|---|
+| reactive − static | +5.62 | +5.08 to +6.17 | 504 / 196 / 0 | higher |
+| predictive-trend − static | +8.12 | +7.15 to +9.08 | 508 / 192 / 0 | higher |
+| predictive-learned − static | +6.63 | +5.93 to +7.34 | 508 / 192 / 0 | higher |
+| predictive-trend − reactive | +2.49 | +2.00 to +2.98 | 156 / 540 / 4 | higher |
+| predictive-learned − reactive | +1.01 | +0.78 to +1.25 | 71 / 615 / 14 | higher |
+| predictive-learned − predictive-trend | -1.48 | -1.90 to -1.08 | 37 / 542 / 121 | lower |
+
+Every adaptive and predictive policy delivers more than static, and trend beats reactive.
+The learned forecaster beats reactive but delivers less than the simpler trend predictor, as in
+the original test. Evidence: `docs/evidence/extended-test/`. The original 350-run sealed test follows.
+
+## Original sealed test — experiment 1.3
 
 The complete sealed matrix passed audit: **350 runs**, 70 workload families, zero failures.
 Seven scenario families × two topologies × five seeds × five policies. Every paired workload shares its packet/event trace hash.

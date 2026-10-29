@@ -5,13 +5,36 @@ The page retains the DESIGN.md palette, globe, restrained mono labels, and flat 
 
 ## Measurement sources
 
-The benchmark graphs and tables come from `docs/evidence/report.json` and the
-350 rows in `docs/evidence/summary.csv` (experiment 1.3). The generator checks
-completion, pairing, disjoint splits, source identity, row counts, and aggregate
-delivery, latency, and goodput against the underlying records before publishing.
-The fifth benchmark policy is predictive-persistence, equivalent to reactive;
-the page shows the four user-selectable policies. Headline metrics are unweighted
-means of 70 run-level observations per policy, not pooled packet rates.
+The headline graphs and tables come from the extended held-out test in
+`docs/evidence/extended-test/`: 3,500 runs = 7 scenarios × 2 topologies × 50 seeds
+(300–349) × 5 policies, with the unchanged frozen model and scorer. These seeds were
+chosen before running and never used for training, validation or the original test;
+the runner and audit both reject any overlap with the model's split families. Each
+seed sets one of five load levels (`seed % 5`), so each level appears ten times.
+This replaced the 5-seed test as the headline before its results were seen.
+
+The generator checks completion, pairing, disjoint splits, source and model identity,
+row counts, and aggregate delivery, latency and goodput against all 3,500 records.
+It also recomputes every confidence interval from `summary.csv` and refuses to publish
+if it differs from `statistics.json`.
+
+Intervals use `smartroute.experiments.statistics`: a paired percentile bootstrap over
+seed blocks (all 14 topology/scenario runs sharing a seed), 20,000 draws, RNG seed
+20261029. A comparison is labelled higher or lower only when its 95% interval
+excludes zero; otherwise it is inconclusive. The page text and verdicts are derived
+from those labels, not written by hand.
+
+The original 350-run sealed test (`docs/evidence/summary.csv`, five seeds) is kept
+and shown beside the new results. The fifth benchmark policy is predictive-persistence,
+equivalent to reactive; the page shows the four user-selectable policies. Headline
+metrics are unweighted means of run-level observations, not pooled packet rates.
+
+Reproduce the extended evidence with:
+
+```sh
+.venv/bin/python -m smartroute.experiments.run --suite extended-test --output artifacts/extended-test
+.venv/bin/python -m smartroute.experiments.publish_extended
+```
 
 A separate fresh live example runs each of the four policies for 120 × 0.2s steps.
 It calls `LiveSession`, which reuses the canonical policies, LinkAdapter, and metrics.
@@ -35,8 +58,10 @@ identified as such on the page.
 
 Run `.venv/bin/python scripts/generate-results.py`, then build the frontend.
 The launcher performs these steps automatically. Assets in `frontend/public/results/`
-include `data.json`, `delivery.svg`, `latency.svg`, `traffic.svg`, `studio.jpg`,
-`benchmark.csv`, and `audit.json`. Live data also goes to ignored
+include `data.json`, `delivery.svg`, `latency.svg`, `paired.svg`, `traffic.svg`,
+`studio.jpg`, `benchmark.csv`, `benchmark-v1.3.csv`, `audit.json`, `audit-v1.3.json`
+and `statistics.json`. If the measured content is unchanged, regeneration keeps the
+previous `generated_at`, so launching the studio does not modify tracked files. Live data also goes to ignored
 `artifacts/results-page-live.json`. SVGs are standalone, titled and described.
 They can be exported without a plotting service or a browser screenshot.
 

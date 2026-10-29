@@ -10,6 +10,9 @@ Start from the README's locked Python environment and Node.js 24. Launch:
    At 0.35 Mbps the path runs through Core Alpha's shorter 1 Mbps links.
 2. Press Stress test to raise the same flow to 1.8 Mbps. New packets route through
    Core Beta's 2.5 Mbps alternative. The event log preserves the initial and new routes.
+   The top counters show Delivered (with the engine's delivery ratio) and Dropped.
+   For contrast, Reset, set Routing engine to Static routing and repeat: static stays on
+   the 1 Mbps Alpha path, so Dropped climbs steadily after the stress test.
 3. Select an active cable and edit its maximum traffic. Changes apply at the next
    control tick. Toggle a cable off to trigger a forced repair, bypassing cooldown.
 4. Pause or Step to inspect a single interval. Inspect Traffic and Packet ledger tabs.
@@ -26,5 +29,6 @@ generation cohort and no final drain; see REACT_STUDIO.md for exact semantics.
 
 The original Streamlit report viewer remains in src/smartroute/dashboard/ for legacy
 fixed-scenario replay and comparison. The React studio is the default user interface.
-Batch reproducibility commands and all 350 paired test runs remain available in README.
+Batch reproducibility commands, the 350-run sealed test and the 3,500-run held-out
+test remain available; see README and RESULTS_PAGE.md.
 React checks and browser evidence are recorded in docs/evidence/react-acceptance.json.

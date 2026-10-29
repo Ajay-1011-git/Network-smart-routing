@@ -42,6 +42,11 @@ def audit(path):
     if manifest["suite"] == "full":
         require(manifest["expected_runs"] == 350, "Full matrix must contain 350 runs")
         require(digest(split) == metadata["split_hashes"][2], "Sealed test assignments changed")
+    if manifest["suite"] == "extended-test":
+        require(manifest["expected_runs"] == 3500, "Extended test must contain 3,500 runs")
+        require(
+            not set(split["families"]) & set().union(*groups), "Extended test reuses model families"
+        )
     policies = POLICIES if manifest["suite"] != "validation-ablation" else POLICIES[1:]
     variants = (
         ("default", "no-hysteresis") if manifest["suite"] == "validation-ablation" else ("default",)

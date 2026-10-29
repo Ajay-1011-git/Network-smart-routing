@@ -14,6 +14,9 @@ from html import escape
 from pathlib import Path
 from statistics import mean
 
+import pandas as pd
+
+from smartroute.experiments.statistics import paired_statistics
 from smartroute.web.live import LiveSession
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,22 +41,66 @@ def svg_start(title, description, width=900, height=360):
     ]
 
 
-def bar_chart(report, metric, scale, maximum, unit, title):
-    parts = svg_start(title, "Mean of 70 paired workload runs per policy. " + unit)
+def bar_chart(by_policy, metric, scale, maximum, unit, title, runs, intervals=None):
+    parts = svg_start(title, f"Mean of {runs} paired workload runs per policy. " + unit
+                      + (" Whiskers show paired seed-block bootstrap 95% intervals." if intervals else ""))
     for i in range(5):
         value = maximum * i / 4
         x = 220 + value / maximum * 570
         parts.append(f'<path d="M{x} 38V290" stroke="#303036" stroke-dasharray="3 5"/>')
         parts.append(f'<text x="{x}" y="318" text-anchor="middle">{value:g}{unit}</text>')
     for i, (policy, label, color) in enumerate(zip(POLICIES, LABELS, COLORS)):
-        value = report["by_policy"][policy][metric] * scale
+        value = by_policy[policy][metric] * scale
         y = 63 + i * 61
+        label_x = 232 + value / maximum * 570
         parts.extend([
             f'<text x="197" y="{y + 20}" text-anchor="end">{escape(label)}</text>',
             f'<rect x="220" y="{y}" width="{value / maximum * 570}" height="29" '
             f'fill="{color}" rx="1"/>',
-            f'<text x="{232 + value / maximum * 570}" y="{y + 20}" '
-            f'fill="#eaeaea">{value:.2f}</text>',
+        ])
+        if intervals:
+            low, high = (v * scale / maximum * 570 + 220 for v in intervals[policy]["ci95"])
+            parts.append(f'<path d="M{low:.2f} {y + 14.5}H{high:.2f}M{low:.2f} {y + 7}V{y + 22}'
+                         f'M{high:.2f} {y + 7}V{y + 22}" stroke="#eaeaea" stroke-width="1.6"/>')
+            label_x = max(label_x, high + 12)
+        parts.append(f'<text x="{label_x:.2f}" y="{y + 20}" fill="#eaeaea">{value:.2f}</text>')
+    parts.append('</g></svg>')
+    return "\n".join(parts)
+
+
+def forest_chart(statistics):
+    rows = statistics["comparisons"]
+    height = 90 + 52 * len(rows)
+    parts = svg_start("Paired delivery differences",
+                      "Mean candidate-minus-baseline delivery difference in percentage points, with "
+                      "paired seed-block bootstrap 95% intervals. Intervals entirely right of zero "
+                      "favor the candidate.", height=height)
+    values = [v * 100 for r in rows for v in r["ci95"]]
+    low, high = min(min(values), 0) - 0.5, max(max(values), 0) + 0.5
+    def x(value):
+        return 330 + (value - low) / (high - low) * 520
+    step = 1 if high - low <= 8 else 2
+    for tick in range(int(low // step) * step, int(high) + 1, step):
+        if low <= tick <= high:
+            parts.append(f'<path d="M{x(tick):.2f} 40V{height - 50}" stroke="#303036" '
+                         f'stroke-dasharray="3 5"/>')
+            parts.append(f'<text x="{x(tick):.2f}" y="{height - 28}" text-anchor="middle">'
+                         f'{tick:+g} pp</text>'.replace('+0 pp', '0 pp'))
+    parts.append(f'<path d="M{x(0):.2f} 34V{height - 46}" stroke="#eaeaea" stroke-width="1.2"/>')
+    names = dict(zip(POLICIES, LABELS))
+    for i, row in enumerate(rows):
+        y = 62 + i * 52
+        color = {"higher": "#7fd579", "lower": "#f0a3a3"}.get(row["conclusion"], "#b1b1bc")
+        a, b = (v * 100 for v in row["ci95"])
+        mean = row["mean_delta"] * 100
+        parts.extend([
+            f'<text x="312" y="{y + 5}" text-anchor="end" fill="#eaeaea">'
+            f'{escape(names[row["candidate"]])} vs {escape(names[row["baseline"]])}</text>',
+            f'<path d="M{x(a):.2f} {y}H{x(b):.2f}" stroke="{color}" stroke-width="2.4"/>',
+            f'<rect x="{x(mean) - 5:.2f}" y="{y - 5}" width="10" height="10" fill="{color}"/>',
+            f'<text x="312" y="{y + 22}" text-anchor="end" font-size="11">'
+            f'{mean:+.2f} pp [{a:+.2f}, {b:+.2f}] · {row["better_runs"]}/{row["equal_runs"]}/'
+            f'{row["worse_runs"]} better/equal/worse</text>',
         ])
     parts.append('</g></svg>')
     return "\n".join(parts)
@@ -142,6 +189,25 @@ def trace_chart(live):
     return "\n".join(parts)
 
 
+def scenario_means(rows):
+    scenarios = defaultdict(dict)
+    for scenario in sorted({row["scenario"] for row in rows}):
+        for policy in POLICIES:
+            group = [row for row in rows if row["scenario"] == scenario and row["policy"] == policy]
+            scenarios[scenario][policy] = mean(float(row["delivery_ratio"]) for row in group)
+    return scenarios
+
+
+def check_headlines(report, rows, runs_per_policy):
+    # Validate published headlines against underlying run-level data.
+    for policy in report["by_policy"]:
+        group = [row for row in rows if row["policy"] == policy]
+        assert len(group) == runs_per_policy
+        for metric in ("delivery_ratio", "mean_latency_s", "throughput_bps"):
+            actual = mean(float(row[metric]) for row in group)
+            assert abs(actual - report["by_policy"][policy][metric]) < 1e-6
+
+
 def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     report = json.loads((EVIDENCE / "report.json").read_text())
@@ -152,39 +218,67 @@ def main():
     assert audit["status"] == "passed" and audit["paired_traces"] and audit["split_disjoint"]
     assert len(rows) == report["completed_runs"] == audit["runs"] == 350
     assert metadata["source_hash"] == audit["source_hash"]
-    # Validate published headlines against underlying run-level data.
-    for policy in report["by_policy"]:
-        group = [row for row in rows if row["policy"] == policy]
-        assert len(group) == 70
-        for metric in ("delivery_ratio", "mean_latency_s", "throughput_bps"):
-            actual = mean(float(row[metric]) for row in group)
-            assert abs(actual - report["by_policy"][policy][metric]) < 1e-6
-    scenarios = defaultdict(dict)
-    for scenario in sorted({row["scenario"] for row in rows}):
-        for policy in POLICIES:
-            group = [row for row in rows if row["scenario"] == scenario and row["policy"] == policy]
-            scenarios[scenario][policy] = mean(float(row["delivery_ratio"]) for row in group)
+    check_headlines(report, rows, 70)
+
+    extended = EVIDENCE / "extended-test"
+    ext_report = json.loads((extended / "report.json").read_text())
+    ext_audit = json.loads((extended / "audit.json").read_text())
+    ext_stats = json.loads((extended / "statistics.json").read_text())
+    ext_rows = list(csv.DictReader((extended / "summary.csv").open()))
+    assert ext_report["status"] == "complete" and ext_report["failed_runs"] == 0
+    assert ext_audit["status"] == "passed" and ext_audit["paired_traces"]
+    assert ext_audit["split_disjoint"] and ext_audit["suite"] == "extended-test"
+    assert len(ext_rows) == ext_report["completed_runs"] == ext_audit["runs"] == 3500
+    assert ext_audit["source_hash"] == metadata["source_hash"]
+    assert ext_audit["model_sha256"] == metadata["model_sha256"]
+    check_headlines(ext_report, ext_rows, 700)
+    # The published intervals must be exactly reproducible from the run-level rows.
+    assert paired_statistics(pd.read_csv(extended / "summary.csv")) == ext_stats
+    for policy, values in ext_stats["by_policy"].items():
+        assert abs(values["mean"] - ext_report["by_policy"][policy]["delivery_ratio"]) < 1e-9
+
     live = run_live_example()
     data = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "experiment_version": metadata["experiment_version"],
         "benchmark": {"runs": 350, "families": 70, "scenarios": 7, "topologies": 2,
                       "seeds_per_topology": 5, "policies": 5, "failed": 0,
-                      "report": report["by_policy"], "by_scenario": scenarios,
+                      "report": report["by_policy"], "by_scenario": scenario_means(rows),
                       "source_sha256": audit["source_hash"],
                       "summary_sha256": hashlib.sha256((EVIDENCE / "summary.csv").read_bytes()).hexdigest()},
+        "extended": {"runs": 3500, "families": 700, "scenarios": 7, "topologies": 2,
+                     "seeds": len(ext_audit["seeds"]), "seed_range": [min(ext_audit["seeds"]), max(ext_audit["seeds"])],
+                     "policies": 5, "failed": 0, "report": ext_report["by_policy"],
+                     "by_scenario": scenario_means(ext_rows), "statistics": ext_stats,
+                     "source_sha256": ext_audit["source_hash"],
+                     "summary_sha256": hashlib.sha256((extended / "summary.csv").read_bytes()).hexdigest()},
         "live": live,
     }
+    # Keep the previous timestamp when nothing measured changed, so launching the
+    # studio does not dirty tracked files with an identical deterministic rerun.
+    previous = OUTPUT / "data.json"
+    if previous.is_file():
+        old = json.loads(previous.read_text())
+        if {**old, "generated_at": None} == {**data, "generated_at": None}:
+            data["generated_at"] = old["generated_at"]
     write_json(OUTPUT / "data.json", data)
-    (OUTPUT / "delivery.svg").write_text(bar_chart(report, "delivery_ratio", 100, 100, "%", "Packet delivery"))
-    (OUTPUT / "latency.svg").write_text(bar_chart(report, "mean_latency_s", 1000, 100, " ms", "Mean packet latency"))
+    by_policy = ext_report["by_policy"]
+    (OUTPUT / "delivery.svg").write_text(bar_chart(by_policy, "delivery_ratio", 100, 100, "%", "Packet delivery",
+                                                   700, ext_stats["by_policy"]))
+    (OUTPUT / "latency.svg").write_text(bar_chart(by_policy, "mean_latency_s", 1000, 100, " ms",
+                                                  "Mean packet latency", 700))
+    (OUTPUT / "paired.svg").write_text(forest_chart(ext_stats))
     (OUTPUT / "traffic.svg").write_text(trace_chart(live))
-    for source, target in [("summary.csv", "benchmark.csv"), ("benchmark-audit.json", "audit.json"),
-                            ("react-studio.jpg", "studio.jpg")]:
+    for source, target in [("extended-test/summary.csv", "benchmark.csv"),
+                           ("summary.csv", "benchmark-v1.3.csv"),
+                           ("extended-test/audit.json", "audit.json"),
+                           ("benchmark-audit.json", "audit-v1.3.json"),
+                           ("extended-test/statistics.json", "statistics.json"),
+                           ("react-studio.jpg", "studio.jpg")]:
         shutil.copyfile(EVIDENCE / source, OUTPUT / target)
     (ROOT / "artifacts").mkdir(exist_ok=True)
     write_json(ROOT / "artifacts" / "results-page-live.json", live)
-    print(f"Results ready: {len(rows)} audited runs + four fresh 24-second live experiments.")
+    print(f"Results ready: {len(ext_rows)} + {len(rows)} audited runs + four fresh 24-second live experiments.")
 
 
 if __name__ == "__main__":

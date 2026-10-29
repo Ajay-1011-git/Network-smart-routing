@@ -25,6 +25,9 @@ def run_suite(suite, model, output):
         raise ValueError("Model/freeze mismatch")
     if suite == "full":
         spec = json.loads(Path("experiment_configs/test.json").read_text())
+    elif suite == "extended-test":
+        # Fresh held-out seeds: disjoint from train/validation/test and never used for selection.
+        spec = json.loads(Path("experiment_configs/extended-test.json").read_text())
     elif suite == "smoke":
         spec = json.loads(Path("experiment_configs/smoke.json").read_text())
     elif suite == "stress":
@@ -34,6 +37,10 @@ def run_suite(suite, model, output):
     split = split_manifest(spec)
     if suite == "full" and digest(split) != metadata["split_hashes"][2]:
         raise ValueError("Sealed test specification changed")
+    if suite == "extended-test":
+        used = {f for m in metadata["split_manifests"] for f in m["families"]}
+        if used & set(split["families"]):
+            raise ValueError("Extended test overlaps model train/validation/test families")
     configurations = list(suite_configs(spec))
     policies = POLICIES if suite != "validation-ablation" else POLICIES[1:]
     variants = ("default", "no-hysteresis") if suite == "validation-ablation" else ("default",)
@@ -159,7 +166,9 @@ def run_suite(suite, model, output):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--suite", choices=("smoke", "full", "stress", "validation-ablation"), default="smoke"
+        "--suite",
+        choices=("smoke", "full", "extended-test", "stress", "validation-ablation"),
+        default="smoke",
     )
     parser.add_argument("--model", default="models/selected")
     parser.add_argument("--output", required=True)
