@@ -94,7 +94,12 @@ def run_suite(suite, model, output):
                     scorer = (
                         metadata["scorer"]
                         if variant == "default"
-                        else {**metadata["scorer"], "improvement": 0.0, "cooldown_s": 0.0}
+                        else {
+                            **metadata["scorer"],
+                            "improvement": 0.0,
+                            "cooldown_s": 0.0,
+                            "flap_hold_s": 0.0,
+                        }
                     )
                     result = engine.run(config, workload, make_policy(policy_name, model, **scorer))
                     save_result(result, output / file)

@@ -9,6 +9,7 @@ from sklearn.linear_model import Ridge
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
+from smartroute.baselines.scoring import DAMPING_DEFAULTS
 from smartroute.intelligence.dataset import build_dataset, split_manifest
 from smartroute.intelligence.features import FEATURE_NAMES
 from smartroute.intelligence.model_io import save_model
@@ -56,8 +57,9 @@ def main(argv=None):
         "support_min": support.min(axis=0).tolist(),
         "support_max": support.max(axis=0).tolist(),
         "rate_ceiling_bps": float(max(train.target_bps.max(), validation.target_bps.max()) * 2),
-        "scorer": {"alpha_s": 0.02, "improvement": 0.10, "cooldown_s": 1.0, "k": 4},
-        "scorer_selection": "Fixed shared-spec defaults; no scorer search",
+        "scorer": {"alpha_s": 0.02, "improvement": 0.10, "cooldown_s": 1.0, "k": 4}
+        | DAMPING_DEFAULTS,
+        "scorer_selection": "Fixed shared-spec defaults; flap damping selected on validation only",
         "validation_scores": scores,
         "train_rows": len(train),
         "validation_rows": len(validation),
@@ -66,7 +68,7 @@ def main(argv=None):
         "feature_names": FEATURE_NAMES,
         "observation_interval_s": 0.2,
         "horizon_s": 1.0,
-        "experiment_version": "1.3",
+        "experiment_version": "1.4",
     }
     metadata = save_model(estimator, args.output, selected)
     freeze = {
@@ -75,7 +77,7 @@ def main(argv=None):
         "split_hashes": metadata["split_hashes"],
         "scorer": metadata["scorer"],
         "test_manifest": manifests[2],
-        "experiment_version": "1.3",
+        "experiment_version": "1.4",
     }
     atomic_json(freeze, Path(args.output) / "freeze.json")
     grouped = []

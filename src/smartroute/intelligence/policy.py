@@ -1,6 +1,6 @@
 import numpy as np
 
-from smartroute.baselines.scoring import choose_routes
+from smartroute.baselines.scoring import FlapDamper, choose_routes, split_scorer
 from smartroute.contracts import Decision, Forecast
 from smartroute.intelligence.features import History, features, trend_rate
 from smartroute.intelligence.model_io import load_model
@@ -10,13 +10,16 @@ class PredictivePolicy:
     def __init__(self, predictor="persistence", model="models/selected", **scorer):
         if predictor not in ("persistence", "trend", "learned"):
             raise ValueError("Unknown predictor")
-        self.predictor, self.scorer = predictor, scorer
+        self.predictor = predictor
+        self.scorer, damping = split_scorer(scorer)
+        self.damper = FlapDamper(**damping)
         self.name = f"predictive-{predictor}"
         self.estimator, self.metadata = load_model(model) if predictor == "learned" else (None, {})
         self.reset()
 
     def reset(self):
         self.history = History()
+        self.damper.reset()
 
     def decide(self, snapshot):
         if self.predictor == "learned" and (
@@ -68,5 +71,10 @@ class PredictivePolicy:
                     reason,
                 )
             )
-        choices = choose_routes(snapshot, {f.flow_id: f.rate_bps for f in forecasts}, **self.scorer)
+        choices = choose_routes(
+            snapshot,
+            {f.flow_id: f.rate_bps for f in forecasts},
+            damper=self.damper,
+            **self.scorer,
+        )
         return Decision(choices, tuple(forecasts))

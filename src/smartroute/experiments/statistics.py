@@ -89,6 +89,26 @@ def paired_statistics(frame, metric="delivery_ratio"):
     }
 
 
+def version_effects(before, after, metrics=("delivery_ratio", "route_changes", "p95_latency_s")):
+    """Paired after-minus-before effects per policy for two runs of the same workloads."""
+    rng = np.random.default_rng(RNG_SEED)
+    effects = {}
+    for policy in sorted(set(before.policy) & set(after.policy)):
+        effects[policy] = {}
+        for metric in metrics:
+            old, new = _blocks(before, policy, metric), _blocks(after, policy, metric)
+            if not (old.index.equals(new.index) and old.columns.equals(new.columns)):
+                raise ValueError("Versions do not cover the same seed blocks")
+            mean, low, high = _interval((new - old).mean(axis=1), rng)
+            effects[policy][metric] = {
+                "before": float(old.to_numpy().mean()),
+                "after": float(new.to_numpy().mean()),
+                "mean_delta": mean,
+                "ci95": [low, high],
+            }
+    return effects
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--summary", required=True)

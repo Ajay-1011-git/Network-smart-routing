@@ -1,4 +1,4 @@
-"""Shared causal, sequential demand reservation and hysteresis controller."""
+"""Shared causal, sequential demand reservation, hysteresis and flap-damping controller."""
 
 import math
 from functools import lru_cache
@@ -54,7 +54,71 @@ def candidates(snapshot, flow, k=4):
     return paths
 
 
-def choose_routes(snapshot, demand_bps, *, alpha_s=0.02, improvement=0.10, cooldown_s=1.0, k=4):
+class FlapDamper:
+    """Exponential hold-down for route reversals, in the spirit of BGP flap damping.
+
+    Returning a flow to a path it voluntarily left is a reversal. A reversal is allowed
+    only after the flow has stayed on its current path for hold_s * 2**penalty seconds
+    (capped at max_hold_s); each reversal adds one to the penalty, which halves every
+    half_life_s. A reversal is damped only while the current path's projected peak load is
+    at most max_load, so a flow is never held on a path it is overloading. Forced repairs never consult or update the damper, so failover and the
+    return to a restored path are unaffected. hold_s=0 disables damping.
+    """
+
+    def __init__(self, hold_s=0.0, half_life_s=10.0, max_hold_s=16.0, max_load=1.0):
+        if hold_s < 0 or half_life_s <= 0 or max_hold_s < hold_s or max_load < 0:
+            raise PolicyError("Invalid flap damping parameters")
+        self.hold_s, self.half_life_s, self.max_hold_s = hold_s, half_life_s, max_hold_s
+        self.max_load = max_load
+        self.reset()
+
+    def reset(self):
+        self.left = {}
+        self.penalty = {}
+
+    def _penalty(self, flow_id, now):
+        value, since = self.penalty.get(flow_id, (0.0, now))
+        return value * 0.5 ** ((now - since) / self.half_life_s)
+
+    def allows(self, flow, route, now, current_load):
+        if (
+            not self.hold_s
+            or current_load > self.max_load + 1e-12
+            or route not in self.left.get(flow.id, ())
+        ):
+            return True
+        hold = min(self.max_hold_s, self.hold_s * 2 ** self._penalty(flow.id, now))
+        since = flow.last_switch_s if flow.last_switch_s is not None else -math.inf
+        return now - since >= hold - 1e-9
+
+    def record(self, flow, route, now):
+        if not self.hold_s or route == flow.route:
+            return
+        if route in self.left.get(flow.id, ()):
+            self.penalty[flow.id] = (self._penalty(flow.id, now) + 1.0, now)
+        self.left.setdefault(flow.id, set()).add(flow.route)
+
+
+# Selected on validation seeds only; see docs/DECISIONS.md. Scorer dictionaries may
+# override these with flap_hold_s, flap_half_life_s and flap_max_hold_s.
+DAMPING_DEFAULTS = {
+    "flap_hold_s": 8.0,
+    "flap_half_life_s": 15.0,
+    "flap_max_hold_s": 16.0,
+    "flap_max_load": 1.0,
+}
+
+
+def split_scorer(scorer):
+    """Separate choose_routes parameters from FlapDamper parameters."""
+    damping = {**DAMPING_DEFAULTS, **{k: v for k, v in scorer.items() if k in DAMPING_DEFAULTS}}
+    rest = {k: v for k, v in scorer.items() if k not in DAMPING_DEFAULTS}
+    return rest, {key.removeprefix("flap_"): value for key, value in damping.items()}
+
+
+def choose_routes(
+    snapshot, demand_bps, *, alpha_s=0.02, improvement=0.10, cooldown_s=1.0, k=4, damper=None
+):
     if set(demand_bps) != {f.id for f in snapshot.flows} or any(
         not math.isfinite(v) or v < 0 for v in demand_bps.values()
     ):
@@ -109,6 +173,13 @@ def choose_routes(snapshot, demand_bps, *, alpha_s=0.02, improvement=0.10, coold
                 elif not cool or gain + 1e-12 < improvement:
                     selected = flow.route
                     reason = "cooldown" if not cool else "hysteresis"
+                elif damper is not None and not damper.allows(
+                    flow, best, snapshot.time_s, cost(flow.route)[1]
+                ):
+                    selected = flow.route
+                    reason = "flap_damping"
+                elif damper is not None:
+                    damper.record(flow, best, snapshot.time_s)
             new_cost, peak = cost(selected)
         for edge in selected:
             reserved[edge] += demand

@@ -120,15 +120,19 @@ def main():
         "| Policy | Mean delivery delta (percentage points) | SD (points) | Better / equal / worse runs |",
         "|---|---:|---:|---:|",
     ]
+    means = {}
     for policy, group in paired.groupby("policy"):
         delta = group.delta_delivery_ratio
+        means[policy] = delta.mean()
         lines.append(
             f"| {policy} | {100 * delta.mean():+.3f} | {100 * delta.std():.3f} | {(delta > 1e-12).sum()} / {(delta.abs() <= 1e-12).sum()} / {(delta < -1e-12).sum()} |"
         )
     lines += [
         "",
         "Persistence and reactive match by design; their packet outcomes are also checked in tests.",
-        "The learned predictor improves aggregate delivery over reactive here, while trend performs better overall. A lower forecast error does not establish a better routing controller.",
+        f"Mean delivery versus reactive: learned {100 * means['predictive-learned']:+.2f} pp, "
+        f"trend {100 * means['predictive-trend']:+.2f} pp. "
+        "A lower forecast error does not establish a better routing controller.",
         "Delivered-only latency can fall when delayed packets drop; read it with delivery, drop and pending rates. All final test runs have zero pending packets.",
         "",
         "## Forecast accuracy",
@@ -154,7 +158,7 @@ def main():
         "",
         "## Stability and unseen-traffic stress",
         "",
-        "The validation-only ablation has 32 runs: two scenarios × two topologies × one seed × four dynamic policies × two guard settings. Scorer alpha and candidate search remain identical.",
+        "The validation-only ablation has 32 runs: two scenarios × two topologies × one seed × four dynamic policies × two guard settings. The no-hysteresis setting removes cooldown, hysteresis and flap damping; scorer alpha and candidate search remain identical.",
         "",
         "| Validation setting | Mean delivery | Mean changes/run |",
         "|---|---:|---:|",
@@ -166,7 +170,7 @@ def main():
         )
     lines += [
         "",
-        "Removing cooldown/hysteresis trades extra switching for delivery in these cases; this is a stability tradeoff, not proof the chosen guards dominate.",
+        "This small ablation compares guard settings on two scenarios only; it is not proof that the chosen guards dominate.",
         "The separate 20-run stress suite uses an unseen abrupt-spike amplitude and duty cycle. It is excluded from the headline matrix.",
         "",
         "| Stress policy | Mean delivery |",
@@ -182,7 +186,7 @@ def main():
         f"Benchmark wall time: {manifest['duration_s']:.2f} seconds on {manifest['environment']['platform']} / Python {manifest['environment']['python']}. Timing is observational and hardware-specific.",
         f"Model SHA256: `{model['model_sha256']}`.",
         f"Full manifest SHA256: `{file_hash(root / 'manifest.json')}`.",
-        f"Model/scorer/splits were frozen before sealed evaluation. Experiment {model['experiment_version']} regenerates the source-verified matrix for the React/live API addition. Earlier boundary corrections are documented in DECISIONS.md; no hyperparameters changed after test inspection.",
+        f"Model/scorer/splits were frozen before sealed evaluation. Experiment {model['experiment_version']} adds flap damping to the shared controller after route oscillation was observed in the live studio and in v1.3 route-change counts; its parameters were selected on validation seeds only (see DECISIONS.md). v1.3 evidence is retained in docs/evidence/v1.3/.",
         "Reactive remains the preselected dashboard default. Five seeds are a small local-study budget; these results do not establish generality, causality outside this simulator, or statistical significance.",
         "Per-flow/workload forecast errors, offered-normalized delivery, null-preserving aggregates, seed deltas, fairness, drop/pending counts and timings are in docs/evidence/. Full packet ledgers remain in artifacts/final-benchmark/runs/.",
         "Reproduce with the README commands. Run failures are retained and block a complete audit; no failed run is filled with zero metrics.",

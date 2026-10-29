@@ -2,41 +2,45 @@
 <title id="title">Paired delivery differences</title><desc id="desc">Mean candidate-minus-baseline delivery difference in percentage points, with paired seed-block bootstrap 95% intervals. Intervals entirely right of zero favor the candidate.</desc>
 <rect width="100%" height="100%" fill="#161616"/>
 <g font-family="Arial, sans-serif" font-size="14" fill="#b1b1bc">
-<path d="M347.35 40V352" stroke="#303036" stroke-dasharray="3 5"/>
-<text x="347.35" y="374" text-anchor="middle">-2 pp</text>
-<path d="M434.15 40V352" stroke="#303036" stroke-dasharray="3 5"/>
-<text x="434.15" y="374" text-anchor="middle">0 pp</text>
-<path d="M520.94 40V352" stroke="#303036" stroke-dasharray="3 5"/>
-<text x="520.94" y="374" text-anchor="middle">+2 pp</text>
-<path d="M607.74 40V352" stroke="#303036" stroke-dasharray="3 5"/>
-<text x="607.74" y="374" text-anchor="middle">+4 pp</text>
-<path d="M694.54 40V352" stroke="#303036" stroke-dasharray="3 5"/>
-<text x="694.54" y="374" text-anchor="middle">+6 pp</text>
-<path d="M781.33 40V352" stroke="#303036" stroke-dasharray="3 5"/>
-<text x="781.33" y="374" text-anchor="middle">+8 pp</text>
-<path d="M434.15 34V356" stroke="#eaeaea" stroke-width="1.2"/>
+<path d="M373.15 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="373.15" y="374" text-anchor="middle">0 pp</text>
+<path d="M438.14 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="438.14" y="374" text-anchor="middle">+2 pp</text>
+<path d="M503.14 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="503.14" y="374" text-anchor="middle">+4 pp</text>
+<path d="M568.13 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="568.13" y="374" text-anchor="middle">+6 pp</text>
+<path d="M633.12 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="633.12" y="374" text-anchor="middle">+8 pp</text>
+<path d="M698.11 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="698.11" y="374" text-anchor="middle">+10 pp</text>
+<path d="M763.10 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="763.10" y="374" text-anchor="middle">+12 pp</text>
+<path d="M828.09 40V352" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="828.09" y="374" text-anchor="middle">+14 pp</text>
+<path d="M373.15 34V356" stroke="#eaeaea" stroke-width="1.2"/>
 <text x="312" y="67" text-anchor="end" fill="#eaeaea">Adaptive vs Static</text>
-<path d="M654.42 62H701.99" stroke="#7fd579" stroke-width="2.4"/>
-<rect x="673.22" y="57" width="10" height="10" fill="#7fd579"/>
-<text x="312" y="84" text-anchor="end" font-size="11">+5.62 pp [+5.08, +6.17] · 504/196/0 better/equal/worse</text>
+<path d="M713.20 62H798.94" stroke="#7fd579" stroke-width="2.4"/>
+<rect x="751.67" y="57" width="10" height="10" fill="#7fd579"/>
+<text x="312" y="84" text-anchor="end" font-size="11">+11.80 pp [+10.46, +13.10] · 572/128/0 better/equal/worse</text>
 <text x="312" y="119" text-anchor="end" fill="#eaeaea">Predictive · trend vs Static</text>
-<path d="M744.24 114H828.30" stroke="#7fd579" stroke-width="2.4"/>
-<rect x="781.38" y="109" width="10" height="10" fill="#7fd579"/>
-<text x="312" y="136" text-anchor="end" font-size="11">+8.12 pp [+7.15, +9.08] · 508/192/0 better/equal/worse</text>
+<path d="M729.90 114H833.75" stroke="#7fd579" stroke-width="2.4"/>
+<rect x="777.15" y="109" width="10" height="10" fill="#7fd579"/>
+<text x="312" y="136" text-anchor="end" font-size="11">+12.59 pp [+10.98, +14.17] · 568/132/0 better/equal/worse</text>
 <text x="312" y="171" text-anchor="end" fill="#eaeaea">Predictive · learned vs Static</text>
-<path d="M691.34 166H752.67" stroke="#7fd579" stroke-width="2.4"/>
-<rect x="716.97" y="161" width="10" height="10" fill="#7fd579"/>
-<text x="312" y="188" text-anchor="end" font-size="11">+6.63 pp [+5.93, +7.34] · 508/192/0 better/equal/worse</text>
+<path d="M718.65 166H808.37" stroke="#7fd579" stroke-width="2.4"/>
+<rect x="759.41" y="161" width="10" height="10" fill="#7fd579"/>
+<text x="312" y="188" text-anchor="end" font-size="11">+12.04 pp [+10.63, +13.39] · 568/132/0 better/equal/worse</text>
 <text x="312" y="223" text-anchor="end" fill="#eaeaea">Predictive · trend vs Adaptive</text>
-<path d="M520.96 218H563.46" stroke="#7fd579" stroke-width="2.4"/>
-<rect x="537.30" y="213" width="10" height="10" fill="#7fd579"/>
-<text x="312" y="240" text-anchor="end" font-size="11">+2.49 pp [+2.00, +2.98] · 156/540/4 better/equal/worse</text>
+<path d="M387.84 218H409.38" stroke="#7fd579" stroke-width="2.4"/>
+<rect x="393.64" y="213" width="10" height="10" fill="#7fd579"/>
+<text x="312" y="240" text-anchor="end" font-size="11">+0.78 pp [+0.45, +1.11] · 135/495/70 better/equal/worse</text>
 <text x="312" y="275" text-anchor="end" fill="#eaeaea">Predictive · learned vs Adaptive</text>
-<path d="M467.82 270H488.28" stroke="#7fd579" stroke-width="2.4"/>
-<rect x="472.89" y="265" width="10" height="10" fill="#7fd579"/>
-<text x="312" y="292" text-anchor="end" font-size="11">+1.01 pp [+0.78, +1.25] · 71/615/14 better/equal/worse</text>
+<path d="M375.59 270H386.27" stroke="#7fd579" stroke-width="2.4"/>
+<rect x="375.89" y="265" width="10" height="10" fill="#7fd579"/>
+<text x="312" y="292" text-anchor="end" font-size="11">+0.24 pp [+0.08, +0.40] · 67/534/99 better/equal/worse</text>
 <text x="312" y="327" text-anchor="end" fill="#eaeaea">Predictive · learned vs Predictive · trend</text>
-<path d="M351.70 322H387.40" stroke="#f0a3a3" stroke-width="2.4"/>
-<rect x="364.74" y="317" width="10" height="10" fill="#f0a3a3"/>
-<text x="312" y="344" text-anchor="end" font-size="11">-1.48 pp [-1.90, -1.08] · 37/542/121 better/equal/worse</text>
+<path d="M346.25 322H364.35" stroke="#f0a3a3" stroke-width="2.4"/>
+<rect x="350.41" y="317" width="10" height="10" fill="#f0a3a3"/>
+<text x="312" y="344" text-anchor="end" font-size="11">-0.55 pp [-0.83, -0.27] · 58/491/151 better/equal/worse</text>
 </g></svg>

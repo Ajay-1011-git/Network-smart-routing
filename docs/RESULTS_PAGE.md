@@ -7,7 +7,7 @@ The page retains the DESIGN.md palette, globe, restrained mono labels, and flat 
 
 The headline graphs and tables come from the extended held-out test in
 `docs/evidence/extended-test/`: 3,500 runs = 7 scenarios × 2 topologies × 50 seeds
-(300–349) × 5 policies, with the unchanged frozen model and scorer. These seeds were
+(300–349) × 5 policies, with the frozen model and the v1.4 controller (including flap damping). These seeds were
 chosen before running and never used for training, validation or the original test;
 the runner and audit both reject any overlap with the model's split families. Each
 seed sets one of five load levels (`seed % 5`), so each level appears ten times.
@@ -24,8 +24,11 @@ seed blocks (all 14 topology/scenario runs sharing a seed), 20,000 draws, RNG se
 excludes zero; otherwise it is inconclusive. The page text and verdicts are derived
 from those labels, not written by hand.
 
-The original 350-run sealed test (`docs/evidence/summary.csv`, five seeds) is kept
-and shown beside the new results. The fifth benchmark policy is predictive-persistence,
+The 350-run sealed test (`docs/evidence/summary.csv`, five seeds) is shown beside the
+held-out results. The stability section compares the same 3,500 workloads before
+(v1.3, `docs/evidence/v1.3/extended-test/`) and after flap damping (v1.4) with paired
+seed-block intervals; the generator refuses to publish if static routing differs between
+the two versions, since it does not use the controller. The fifth benchmark policy is predictive-persistence,
 equivalent to reactive; the page shows the four user-selectable policies. Headline
 metrics are unweighted means of run-level observations, not pooled packet rates.
 
@@ -59,7 +62,8 @@ identified as such on the page.
 Run `.venv/bin/python scripts/generate-results.py`, then build the frontend.
 The launcher performs these steps automatically. Assets in `frontend/public/results/`
 include `data.json`, `delivery.svg`, `latency.svg`, `paired.svg`, `traffic.svg`,
-`studio.jpg`, `benchmark.csv`, `benchmark-v1.3.csv`, `audit.json`, `audit-v1.3.json`
+`damping.svg`, `studio.jpg`, `benchmark.csv`, `benchmark-sealed.csv`, `audit.json`,
+`audit-sealed.json`
 and `statistics.json`. If the measured content is unchanged, regeneration keeps the
 previous `generated_at`, so launching the studio does not modify tracked files. Live data also goes to ignored
 `artifacts/results-page-live.json`. SVGs are standalone, titled and described.

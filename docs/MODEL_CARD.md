@@ -1,6 +1,6 @@
 # Model card
 
-Experiment version: 1.3
+Experiment version: 1.4
 
 Model: StandardScaler+Ridge, Ridge alpha=0.01. Artifact size: 1713 bytes.
 
@@ -18,7 +18,7 @@ Flow/node IDs, scenario names, seeds, traffic segments, future events and future
 
 Limitations: sudden unannounced spikes cannot be anticipated reliably. Ridge can underfit periodic bursts; a forecast winner can lose in the routing experiment. The small catalog and seed budget limit generalization. See RESULTS.md and DECISIONS.md.
 
-Model SHA256: `63f1f43ddd8c622059a9d0a9940ffbd1c1eb5cd769e1cabcc7a1bcc883b67dda`. Source SHA256: `29b075b4172473ff31e36171a89328fea93039b0859cc9a5a6d9134b72096d85`.
+Model SHA256: `63f1f43ddd8c622059a9d0a9940ffbd1c1eb5cd769e1cabcc7a1bcc883b67dda`. Source SHA256: `b304b658391caf8acbed38a301dbfcf5afe8161f95d6eb8624066de51ab324bf`.
 
 Metadata includes schema, ordered feature names/hash, dependency versions, split hashes/manifests, support bounds, validation scores and the exact scorer. A fresh process reloads the verified artifact. Joblib files are executable: only project-generated trusted model/artifact directories are accepted, and the UI never accepts uploaded models.
 

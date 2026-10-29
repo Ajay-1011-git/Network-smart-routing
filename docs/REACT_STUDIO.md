@@ -63,6 +63,14 @@ animate it at visible speed. Visual position is illustrative and time-dilated, n
 second data plane. Reduced-motion preferences suppress packet animation. All counters
 use the complete server ledger.
 
+The top counters show source traffic, delivered packets with the engine's delivery
+ratio (delivered ÷ generated so far, so in-flight packets count as not yet delivered),
+dropped packets, reroutes and mean latency. Adaptive and predictive policies use the
+shared controller's flap damping: a flow that returns to a path it recently left must
+first stay put 8 s (doubling per repeat, up to 16 s) unless its current path is
+overloaded. Near a link's capacity this keeps the highlighted route steady instead of
+switching every second.
+
 ## Local API
 
 | Method | Path | Purpose |

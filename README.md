@@ -38,7 +38,8 @@ the topology or changing policies. IP labels annotate devices; the simulation us
 The included demo has a short 1 Mbps path through Core Alpha and a longer 2.5 Mbps
 path through Core Beta. Start at 0.35 Mbps, then press **Stress test** to increase demand
 to 1.8 Mbps. Watch the path change and inspect its reason in the event log. Disable an
-active cable to trigger failover. Packet motion samples real wire-entry events, slowed
+active cable to trigger failover. Flap damping stops a flow from bouncing back to a
+path it just left (see [decisions](docs/DECISIONS.md)), so routes stay steady near capacity. Packet motion samples real wire-entry events, slowed
 for visibility; the counters include every simulated packet.
 
 Network layout/settings autosave in browser storage. Save/import network JSON for

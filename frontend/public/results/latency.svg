@@ -16,12 +16,12 @@
 <rect x="220" y="63" width="445.9466327979575" height="29" fill="#777786" rx="1"/>
 <text x="677.95" y="83" fill="#eaeaea">78.24</text>
 <text x="197" y="144" text-anchor="end">Adaptive</text>
-<rect x="220" y="124" width="351.938795795293" height="29" fill="#8b8bfe" rx="1"/>
-<text x="583.94" y="144" fill="#eaeaea">61.74</text>
+<rect x="220" y="124" width="238.9462334207087" height="29" fill="#8b8bfe" rx="1"/>
+<text x="470.95" y="144" fill="#eaeaea">41.92</text>
 <text x="197" y="205" text-anchor="end">Predictive · trend</text>
-<rect x="220" y="185" width="326.8004360580591" height="29" fill="#7fd579" rx="1"/>
-<text x="558.80" y="205" fill="#eaeaea">57.33</text>
+<rect x="220" y="185" width="232.9293111050909" height="29" fill="#7fd579" rx="1"/>
+<text x="464.93" y="205" fill="#eaeaea">40.86</text>
 <text x="197" y="266" text-anchor="end">Predictive · learned</text>
-<rect x="220" y="246" width="338.7573949066857" height="29" fill="#d896ff" rx="1"/>
-<text x="570.76" y="266" fill="#eaeaea">59.43</text>
+<rect x="220" y="246" width="236.06103892623096" height="29" fill="#d896ff" rx="1"/>
+<text x="468.06" y="266" fill="#eaeaea">41.41</text>
 </g></svg>

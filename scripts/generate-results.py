@@ -16,7 +16,7 @@ from statistics import mean
 
 import pandas as pd
 
-from smartroute.experiments.statistics import paired_statistics
+from smartroute.experiments.statistics import paired_statistics, version_effects
 from smartroute.web.live import LiveSession
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -208,6 +208,31 @@ def check_headlines(report, rows, runs_per_policy):
             assert abs(actual - report["by_policy"][policy][metric]) < 1e-6
 
 
+def damping_chart(effects):
+    parts = svg_start("Route changes before and after flap damping",
+                      "Mean route changes per run on the same 3,500 held-out workloads, before (v1.3) "
+                      "and after (v1.4) flap damping. Whiskers show the paired 95% interval of the change.")
+    maximum = 25
+    for i in range(6):
+        value = maximum * i / 5
+        x = 220 + value / maximum * 570
+        parts.append(f'<path d="M{x} 38V290" stroke="#303036" stroke-dasharray="3 5"/>')
+        parts.append(f'<text x="{x}" y="318" text-anchor="middle">{value:g}</text>')
+    for i, (policy, label, color) in enumerate(zip(POLICIES, LABELS, COLORS)):
+        change = effects[policy]["route_changes"]
+        y = 52 + i * 61
+        before, after = change["before"], change["after"]
+        parts.extend([
+            f'<text x="197" y="{y + 22}" text-anchor="end">{escape(label)}</text>',
+            f'<rect x="220" y="{y}" width="{before / maximum * 570:.2f}" height="15" fill="#3a3a46"/>',
+            f'<text x="{228 + before / maximum * 570:.2f}" y="{y + 12}" font-size="12">{before:.1f} before</text>',
+            f'<rect x="220" y="{y + 18}" width="{after / maximum * 570:.2f}" height="15" fill="{color}"/>',
+            f'<text x="{228 + after / maximum * 570:.2f}" y="{y + 30}" font-size="12" fill="#eaeaea">{after:.1f} after</text>',
+        ])
+    parts.append('<text x="220" y="345" font-size="12">Route changes per run</text></g></svg>')
+    return "\n".join(parts)
+
+
 def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     report = json.loads((EVIDENCE / "report.json").read_text())
@@ -236,6 +261,19 @@ def main():
     assert paired_statistics(pd.read_csv(extended / "summary.csv")) == ext_stats
     for policy, values in ext_stats["by_policy"].items():
         assert abs(values["mean"] - ext_report["by_policy"][policy]["delivery_ratio"]) < 1e-9
+    # Before/after flap damping on identical held-out workloads (v1.3 evidence is kept).
+    before_dir = EVIDENCE / "v1.3/extended-test"
+    before_audit = json.loads((before_dir / "audit.json").read_text())
+    assert before_audit["status"] == "passed" and before_audit["runs"] == 3500
+    assert before_audit["seeds"] == ext_audit["seeds"]
+    before_rows = pd.read_csv(before_dir / "summary.csv")
+    after_rows = pd.read_csv(extended / "summary.csv")
+    assert (before_rows.groupby(["topology", "scenario", "seed"]).ngroups
+            == after_rows.groupby(["topology", "scenario", "seed"]).ngroups == 700)
+    effects = version_effects(before_rows, after_rows)
+    static = effects["static"]["delivery_ratio"]
+    assert static["mean_delta"] == 0 and static["ci95"] == [0, 0], "Static must be unaffected"
+    damping = {key: value for key, value in metadata["scorer"].items() if key.startswith("flap_")}
 
     live = run_live_example()
     data = {
@@ -252,6 +290,7 @@ def main():
                      "by_scenario": scenario_means(ext_rows), "statistics": ext_stats,
                      "source_sha256": ext_audit["source_hash"],
                      "summary_sha256": hashlib.sha256((extended / "summary.csv").read_bytes()).hexdigest()},
+        "damping": {"parameters": damping, "before_version": "1.3", "effects": effects},
         "live": live,
     }
     # Keep the previous timestamp when nothing measured changed, so launching the
@@ -268,11 +307,12 @@ def main():
     (OUTPUT / "latency.svg").write_text(bar_chart(by_policy, "mean_latency_s", 1000, 100, " ms",
                                                   "Mean packet latency", 700))
     (OUTPUT / "paired.svg").write_text(forest_chart(ext_stats))
+    (OUTPUT / "damping.svg").write_text(damping_chart(effects))
     (OUTPUT / "traffic.svg").write_text(trace_chart(live))
     for source, target in [("extended-test/summary.csv", "benchmark.csv"),
-                           ("summary.csv", "benchmark-v1.3.csv"),
+                           ("summary.csv", "benchmark-sealed.csv"),
                            ("extended-test/audit.json", "audit.json"),
-                           ("benchmark-audit.json", "audit-v1.3.json"),
+                           ("benchmark-audit.json", "audit-sealed.json"),
                            ("extended-test/statistics.json", "statistics.json"),
                            ("react-studio.jpg", "studio.jpg")]:
         shutil.copyfile(EVIDENCE / source, OUTPUT / target)

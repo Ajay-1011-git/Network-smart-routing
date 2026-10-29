@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+<title id="title">Route changes before and after flap damping</title><desc id="desc">Mean route changes per run on the same 3,500 held-out workloads, before (v1.3) and after (v1.4) flap damping. Whiskers show the paired 95% interval of the change.</desc>
+<rect width="100%" height="100%" fill="#161616"/>
+<g font-family="Arial, sans-serif" font-size="14" fill="#b1b1bc">
+<path d="M220.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="220.0" y="318" text-anchor="middle">0</text>
+<path d="M334.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="334.0" y="318" text-anchor="middle">5</text>
+<path d="M448.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="448.0" y="318" text-anchor="middle">10</text>
+<path d="M562.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="562.0" y="318" text-anchor="middle">15</text>
+<path d="M676.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="676.0" y="318" text-anchor="middle">20</text>
+<path d="M790.0 38V290" stroke="#303036" stroke-dasharray="3 5"/>
+<text x="790.0" y="318" text-anchor="middle">25</text>
+<text x="197" y="74" text-anchor="end">Static</text>
+<rect x="220" y="52" width="6.51" height="15" fill="#3a3a46"/>
+<text x="234.51" y="64" font-size="12">0.3 before</text>
+<rect x="220" y="70" width="6.51" height="15" fill="#777786"/>
+<text x="234.51" y="82" font-size="12" fill="#eaeaea">0.3 after</text>
+<text x="197" y="135" text-anchor="end">Adaptive</text>
+<rect x="220" y="113" width="422.48" height="15" fill="#3a3a46"/>
+<text x="650.48" y="125" font-size="12">18.5 before</text>
+<rect x="220" y="131" width="139.89" height="15" fill="#8b8bfe"/>
+<text x="367.89" y="143" font-size="12" fill="#eaeaea">6.1 after</text>
+<text x="197" y="196" text-anchor="end">Predictive · trend</text>
+<rect x="220" y="174" width="408.05" height="15" fill="#3a3a46"/>
+<text x="636.05" y="186" font-size="12">17.9 before</text>
+<rect x="220" y="192" width="141.29" height="15" fill="#7fd579"/>
+<text x="369.29" y="204" font-size="12" fill="#eaeaea">6.2 after</text>
+<text x="197" y="257" text-anchor="end">Predictive · learned</text>
+<rect x="220" y="235" width="418.64" height="15" fill="#3a3a46"/>
+<text x="646.64" y="247" font-size="12">18.4 before</text>
+<rect x="220" y="253" width="141.13" height="15" fill="#d896ff"/>
+<text x="369.13" y="265" font-size="12" fill="#eaeaea">6.2 after</text>
+<text x="220" y="345" font-size="12">Route changes per run</text></g></svg>

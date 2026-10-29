@@ -17,15 +17,15 @@
 <path d="M688.61 77.5H712.69M688.61 70V85M712.69 70V85" stroke="#eaeaea" stroke-width="1.6"/>
 <text x="724.69" y="83" fill="#eaeaea">84.36</text>
 <text x="197" y="144" text-anchor="end">Adaptive</text>
-<rect x="220" y="124" width="512.9275642794639" height="29" fill="#8b8bfe" rx="1"/>
-<path d="M723.78 138.5H742.10M723.78 131V146M742.10 131V146" stroke="#eaeaea" stroke-width="1.6"/>
-<text x="754.10" y="144" fill="#eaeaea">89.99</text>
+<rect x="220" y="124" width="548.1425662021647" height="29" fill="#8b8bfe" rx="1"/>
+<path d="M763.42 138.5H772.82M763.42 131V146M772.82 131V146" stroke="#eaeaea" stroke-width="1.6"/>
+<text x="784.82" y="144" fill="#eaeaea">96.17</text>
 <text x="197" y="205" text-anchor="end">Predictive · trend</text>
-<rect x="220" y="185" width="527.1326153261624" height="29" fill="#7fd579" rx="1"/>
-<path d="M739.80 199.5H754.47M739.80 192V207M754.47 192V207" stroke="#eaeaea" stroke-width="1.6"/>
-<text x="766.47" y="205" fill="#eaeaea">92.48</text>
+<rect x="220" y="185" width="552.6124370831831" height="29" fill="#7fd579" rx="1"/>
+<path d="M769.46 199.5H775.74M769.46 192V207M775.74 192V207" stroke="#eaeaea" stroke-width="1.6"/>
+<text x="787.74" y="205" fill="#eaeaea">96.95</text>
 <text x="197" y="266" text-anchor="end">Predictive · learned</text>
-<rect x="220" y="246" width="518.6733032478367" height="29" fill="#d896ff" rx="1"/>
-<path d="M730.41 260.5H747.15M730.41 253V268M747.15 253V268" stroke="#eaeaea" stroke-width="1.6"/>
-<text x="759.15" y="266" fill="#eaeaea">91.00</text>
+<rect x="220" y="246" width="549.4996719533348" height="29" fill="#d896ff" rx="1"/>
+<path d="M765.12 260.5H773.77M765.12 253V268M773.77 253V268" stroke="#eaeaea" stroke-width="1.6"/>
+<text x="785.77" y="266" fill="#eaeaea">96.40</text>
 </g></svg>

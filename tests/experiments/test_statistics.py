@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from smartroute.experiments.statistics import paired_statistics
+from smartroute.experiments.statistics import paired_statistics, version_effects
 
 
 def frame(offsets):
@@ -57,3 +57,14 @@ def test_missing_run_is_rejected():
     data = frame({"static": lambda *_: 0.0, "reactive": lambda *_: 0.0})
     with pytest.raises(ValueError):
         paired_statistics(data.drop(index=data.index[-1]))
+
+
+def test_version_effects_recover_paired_change():
+    before = frame({"reactive": lambda *_: 0.0})
+    after = frame({"reactive": lambda s, c: 0.02})
+    effect = version_effects(before, after, metrics=("delivery_ratio",))["reactive"][
+        "delivery_ratio"
+    ]
+    assert effect["mean_delta"] == pytest.approx(0.02)
+    assert effect["ci95"] == pytest.approx([0.02, 0.02])
+    assert effect["after"] - effect["before"] == pytest.approx(0.02)

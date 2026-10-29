@@ -59,3 +59,42 @@ per topology/family are a local project budget. Delivered-only latency must be r
 alongside delivery/drop/pending ratios. No publication novelty or universal ML advantage
 is claimed. Local joblib artifacts are trusted executable files, checked against metadata;
 hash checks detect stale/corrupted artifacts and do not authenticate an untrusted publisher.
+
+## Experiment 1.4 — route flap damping
+
+**Observation.** In the live studio, a single flow offered 0.8–1.2 Mbps over the demo's
+1 Mbps Alpha path switched between Alpha and the 2.5 Mbps Beta path once per second
+(30 changes in 30 s, the cooldown limit). Leaving Alpha empties its queue, so Alpha looks
+cheaper again and the flow returns and refills it. v1.3 benchmark runs showed the same
+pattern: about 18 route changes per adaptive run, 9 even in the steady scenario.
+
+**Change.** `FlapDamper` in `baselines/scoring.py`, owned by the reactive and predictive
+policies, adds an exponential hold-down to *reversals* (returning to a path the flow
+voluntarily left): hold_s × 2^penalty, capped at max_hold_s; each reversal adds one to
+a penalty that halves every half_life_s. A reversal is damped only while the current
+path's projected peak load is ≤ max_load, so a flow is never held on a path it is
+overloading. Forced repairs bypass and do not update the damper. Static routing is
+unaffected. Cost function, alpha_s, hysteresis, cooldown and candidate search are unchanged.
+
+**Selection (validation seeds 100–102 only, 42 families).** Rule fixed before the sweep:
+choose the setting with the fewest mean route changes among those whose mean validation
+delivery, for every adaptive policy, is no lower than the undamped controller minus 0.1 pp;
+if none qualifies, ship no damping. Three designs were tried, in order:
+
+1. Damp every reversal: route changes 18 → 5–9, but delivery fell 1.5–3 pp in every
+   setting. Rejected by the rule.
+2. Damp only reversals onto a lightly loaded path: one setting passed on validation but
+   in the studio it held flows on an overloaded 1 Mbps path at 1.1–1.2 Mbps
+   (147 and 481 drops where undamped had none). Rejected on inspection.
+3. Damp only while the current path is not overloaded (shipped): all nine settings
+   raised validation delivery (reactive 93.65% → 97.8–98.1%, trend 95.80% → 98.2–98.3%).
+   By the rule, hold_s=8, half_life_s=15, max_hold_s=16, max_load=1.0 was selected
+   (route changes 18.2 → 4.6). The learned policy, checked on validation afterwards,
+   moved 95.01% → 98.39% with 17.7 → 4.4 changes. Sweep: `docs/evidence/flap-damping-validation.json`.
+
+Retraining produced byte-identical model weights (features use routing-independent source
+rates); only metadata, source hash and scorer parameters changed. The sealed 350-run test
+and the 3,500-run held-out test were then rerun once. The flapping was first noticed via
+the studio and v1.3 route-change counts, so v1.4 is not a pre-registered confirmatory
+study; its parameters, however, never saw test-seed outcomes. v1.3 evidence is kept in
+`docs/evidence/v1.3/`. The no-hysteresis ablation variant also disables damping.
